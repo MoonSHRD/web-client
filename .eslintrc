@@ -1,0 +1,12 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "env": { "browser": true },
+  "plugins": [
+    "react-hooks"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": 0,
+    "react/forbid-prop-types": 0,
+    "react-hooks/rules-of-hooks": "error"
+  }
+}
