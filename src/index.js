@@ -1,12 +1,12 @@
 import React from 'react';
 import { render } from 'react-dom';
 import sdk from 'matrix-js-sdk';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 import App from './components/App';
-import MatrixClientContext from './components/MatrixClientContext';
+import createStore from './store/createStore';
 
-const client = sdk.createClient({
-  baseUrl: 'http://13.59.234.201.xip.io',
-});
+const { store, persistor } = createStore();
 
 // client.login('m.login.password', { identifier: { type: "m.id.user", user: "alexes" }, password: 'alexes1alexes' })
 //   .then(res => {
@@ -26,9 +26,11 @@ const client = sdk.createClient({
 // client.sendTextMessage('!ibKkPlmNDASwTpDLRt:13.59.234.201.xip.io', 'hellofrom js');
 
 const tree = (
-  <MatrixClientContext.Provider value={client}>
-    <App />
-  </MatrixClientContext.Provider>
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <App />
+    </PersistGate>
+  </Provider>
 );
 const node = document.getElementById('app');
 

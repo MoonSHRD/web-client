@@ -2,13 +2,10 @@ import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { camelizeKeys } from 'humps';
-import MatrixClientContext from './MatrixClientContext';
 
 const hasErrors = fieldsError => Object.keys(fieldsError).some(field => fieldsError[field]);
 
-const Login = ({ form, setMatrix }) => {
-  const client = useContext(MatrixClientContext);
-
+const Login = ({ matrixClient, form, setMatrix }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
@@ -25,7 +22,7 @@ const Login = ({ form, setMatrix }) => {
         password: values.password,
       };
 
-      client
+      matrixClient
         .login('m.login.password', options)
         .then(camelizeKeys)
         .then(setMatrix)
@@ -61,6 +58,7 @@ const Login = ({ form, setMatrix }) => {
 Login.propTypes = {
   form: PropTypes.object.isRequired,
   setMatrix: PropTypes.func.isRequired,
+  matrixClient: PropTypes.object.isRequired,
 };
 
 const enhance = Form.create();

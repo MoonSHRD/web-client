@@ -20,6 +20,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "babel-plugin-import": "^1.11.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "eslint": "^5.11.1",
     "eslint-config-prettier": "^3.3.0",
     "eslint-plugin-import": "^2.14.0",
@@ -38,6 +39,10 @@
     "matrix-js-sdk": "^0.14.2",
     "prop-types": "^15.6.2",
     "react": "^16.7.0-alpha.2",
-    "react-dom": "^16.7.0-alpha.2"
+    "react-dom": "^16.7.0-alpha.2",
+    "react-redux": "^6.0.0",
+    "redux": "^4.0.1",
+    "redux-persist": "^5.10.0",
+    "store": "^2.0.12"
   }
 }
