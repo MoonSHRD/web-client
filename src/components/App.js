@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Login from './Login';
+import useLocalStorage from '../utils/useLocalStorage';
 
 const App = () => {
-  const [matrix, setMatrix] = useState({});
+  const [matrix, setMatrix] = useLocalStorage('matrix', {});
 
   if (!matrix.accessToken) {
     return <Login setMatrix={setMatrix} />;
