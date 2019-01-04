@@ -33,6 +33,7 @@
     "prettier": "^1.15.3"
   },
   "dependencies": {
+    "@reach/router": "^1.2.1",
     "antd": "^3.11.6",
     "eslint-config-airbnb": "^17.1.0",
     "humps": "^2.0.1",
