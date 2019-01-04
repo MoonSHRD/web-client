@@ -1,29 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link } from '@reach/router';
 
-const useJoinedRooms = client => {
-  const [joinedRooms, setJoinedRooms] = useState([]);
-
-  useEffect(
-    () => {
-      client.getJoinedRooms().then(res => {
-        setJoinedRooms(res.joined_rooms);
-      });
-    },
-    [client]
-  );
-
-  return joinedRooms;
-};
-
-const Sidebar = ({ matrixClient }) => {
-  const joinedRooms = useJoinedRooms(matrixClient);
-
+const Sidebar = ({ rooms }) => {
   return (
     <div>
-      {joinedRooms.map(id => (
+      {Object.keys(rooms).map(id => (
         <div key={id}>
-          <Link to={`/chat/${id}`}>{id}</Link>
+          <Link to={`/room/${id}`}>{rooms[id].name}</Link>
         </div>
       ))}
     </div>
