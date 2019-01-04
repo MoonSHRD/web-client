@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import SendMessage from './SendMessage';
 
 const Message = ({ event }) => <div>{event.content.body}</div>;
 
@@ -47,6 +48,7 @@ const Room = ({ matrixClient, id }) => {
 
         return <View event={t.event} key={t.event.event_id} />;
       })}
+      <SendMessage matrixClient={matrixClient} roomId={id} />
     </div>
   );
 };

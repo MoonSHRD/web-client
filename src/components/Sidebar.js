@@ -13,7 +13,7 @@ const Sidebar = ({ rooms }) => (
 );
 
 Sidebar.propTypes = {
-  rooms: PropTypes.array.isRequired,
+  rooms: PropTypes.object.isRequired,
 };
 
 export default Sidebar;

@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { camelizeKeys } from 'humps';
-
-const hasErrors = fieldsError => Object.keys(fieldsError).some(field => fieldsError[field]);
+import { hasErrors } from '../utils/form';
 
 const Login = ({ matrixClient, form, setMatrix }) => {
   const handleSubmit = e => {
