@@ -7,7 +7,9 @@ import * as actions from '../store/actions';
 import Login from './Login';
 import Sidebar from './Sidebar';
 import Room from './Room';
+import MainMenu from './MainMenu';
 import { useMatrix } from './hooks';
+import './App.css';
 
 const App = ({ matrix, updateMatrix }) => {
   const { matrixClient, matrixRooms } = useMatrix(matrix);
@@ -21,11 +23,14 @@ const App = ({ matrix, updateMatrix }) => {
   }
 
   return (
-    <div>
-      <Sidebar rooms={matrixRooms} />
-      <Router>
-        <Room path="room/:id" matrixClient={matrixClient} />
-      </Router>
+    <div styleName="root">
+      <MainMenu styleName="menu" />
+      <Sidebar rooms={matrixRooms} styleName="sidebar" />
+      <div styleName="content">
+        <Router>
+          <Room path="room/:id" matrixClient={matrixClient} />
+        </Router>
+      </div>
     </div>
   );
 };

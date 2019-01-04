@@ -1,0 +1,23 @@
+body,
+html {
+  padding: 0;
+  margin: 0;
+}
+
+.root {
+  display: flex;
+  height: 100vh;
+}
+
+.menu {
+  width: 80px;
+}
+
+.sidebar {
+  width: 200px;
+  overflow-y: auto;
+}
+
+.content {
+  flex: 1;
+}

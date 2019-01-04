@@ -1,6 +1,9 @@
 {
   "plugins": [
     "transform-class-properties",
+    ["react-css-modules", {
+      "generateScopedName": "_[path]_[name]__[local]",
+    }],
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
   ],
 }

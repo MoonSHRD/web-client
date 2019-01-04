@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SendMessage from './SendMessage';
+import './Room.css';
 
 const Message = ({ event }) => <div>{event.content.body}</div>;
 
@@ -37,18 +38,20 @@ const Room = ({ matrixClient, id }) => {
   }
 
   return (
-    <div>
-      {room.timeline.map(t => {
-        const View = eventViews[t.event.type];
+    <div styleName="root">
+      <div styleName="timeline">
+        {room.timeline.map(t => {
+          const View = eventViews[t.event.type];
 
-        if (!View) {
-          console.log(t.event);
-          return <div key={t.event.event_id}>Unk event: {t.event.type}</div>;
-        }
+          if (!View) {
+            console.log(t.event);
+            return <div key={t.event.event_id}>Unk event: {t.event.type}</div>;
+          }
 
-        return <View event={t.event} key={t.event.event_id} />;
-      })}
-      <SendMessage matrixClient={matrixClient} roomId={id} />
+          return <View event={t.event} key={t.event.event_id} />;
+        })}
+      </div>
+      <SendMessage styleName="send" matrixClient={matrixClient} roomId={id} />
     </div>
   );
 };

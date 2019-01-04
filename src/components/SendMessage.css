@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  padding: 0 20px;
+}
+
+.message {
+  flex: 1;
+}
+
+.message input,
+.message :global(.ant-form-item-control-wrapper) {
+  width: 100%;
+}
+
+.submit {
+  flex: 0;
+}
