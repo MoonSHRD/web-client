@@ -4,6 +4,7 @@ import './MainMenu.css';
 
 const MainMenu = ({ className, ...props }) => (
   <div className={className} styleName="root" {...props}>
+    <div styleName="logo" />
     MainMenu
   </div>
 );
