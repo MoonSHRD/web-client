@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import sdk from 'matrix-js-sdk';
 
 const baseMatrixOptions = {
-  baseUrl: 'http://13.59.234.201.xip.io',
+  baseUrl: 'https://13.59.234.201.xip.io',
 };
 
 // eslint-disable-next-line import/prefer-default-export
