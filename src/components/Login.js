@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { camelizeKeys } from 'humps';
 import { hasErrors } from '../utils/form';
+import './Login.css';
 
 const Login = ({ matrixClient, form, setMatrix }) => {
   const handleSubmit = e => {
@@ -34,23 +35,25 @@ const Login = ({ matrixClient, form, setMatrix }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit}>
-      <Form.Item>
-        {form.getFieldDecorator('user', { rules: [{ required: true, message: 'Please input your username!' }] })(
-          <Input placeholder="Username" />
-        )}
-      </Form.Item>
-      <Form.Item>
-        {form.getFieldDecorator('password', { rules: [{ required: true, message: 'Please input your password!' }] })(
-          <Input placeholder="password" />
-        )}
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit" disabled={hasErrors(form.getFieldsError())}>
-          Log in
-        </Button>
-      </Form.Item>
-    </Form>
+    <div styleName="root">
+      <Form onSubmit={handleSubmit}>
+        <Form.Item>
+          {form.getFieldDecorator('user', { rules: [{ required: true, message: 'Please input your username!' }] })(
+            <Input placeholder="Username" />
+          )}
+        </Form.Item>
+        <Form.Item>
+          {form.getFieldDecorator('password', { rules: [{ required: true, message: 'Please input your password!' }] })(
+            <Input placeholder="Password" />
+          )}
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" disabled={hasErrors(form.getFieldsError())}>
+            Log in
+          </Button>
+        </Form.Item>
+      </Form>
+    </div>
   );
 };
 
