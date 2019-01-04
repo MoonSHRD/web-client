@@ -7,6 +7,7 @@ export const makeHandleSubmit = (form, fn) => event => {
     try {
       fn(err, values);
     } catch (e) {
+      // antd form hides errors
       console.error(e);
     }
   });

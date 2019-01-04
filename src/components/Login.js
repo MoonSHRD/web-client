@@ -2,37 +2,33 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { camelizeKeys } from 'humps';
-import { hasErrors } from '../utils/form';
+import { hasErrors, makeHandleSubmit } from '../utils/form';
 import './Login.css';
 
 const Login = ({ matrixClient, form, setMatrix }) => {
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSubmit = makeHandleSubmit(form, (err, values) => {
+    if (err) {
+      return;
+    }
 
-    form.validateFields((err, values) => {
-      if (err) {
-        return;
-      }
+    const options = {
+      identifier: {
+        type: 'm.id.user',
+        user: values.user,
+      },
+      password: values.password,
+    };
 
-      const options = {
-        identifier: {
-          type: 'm.id.user',
-          user: values.user,
-        },
-        password: values.password,
-      };
-
-      matrixClient
-        .login('m.login.password', options)
-        .then(camelizeKeys)
-        .then(setMatrix)
-        .catch(matrixError => {
-          form.setFields({
-            password: { value: '', errors: [matrixError] },
-          });
+    matrixClient
+      .login('m.login.password', options)
+      .then(camelizeKeys)
+      .then(setMatrix)
+      .catch(matrixError => {
+        form.setFields({
+          password: { value: '', errors: [matrixError] },
         });
-    });
-  };
+      });
+  });
 
   return (
     <div styleName="root">
