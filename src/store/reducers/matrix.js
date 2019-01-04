@@ -3,5 +3,9 @@ export default (state = null, action) => {
     return action.value;
   }
 
+  if (action.type === 'LOGOUT') {
+    return null;
+  }
+
   return state;
 };

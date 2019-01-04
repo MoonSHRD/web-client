@@ -11,7 +11,7 @@ import MainMenu from './MainMenu';
 import { useMatrix } from './hooks';
 import './App.css';
 
-const App = ({ matrix, updateMatrix }) => {
+const App = ({ matrix, updateMatrix, logout }) => {
   const { matrixClient, matrixRooms } = useMatrix(matrix);
 
   if (!matrixClient) {
@@ -24,7 +24,7 @@ const App = ({ matrix, updateMatrix }) => {
 
   return (
     <div styleName="root">
-      <MainMenu styleName="menu" />
+      <MainMenu styleName="menu" logout={logout} />
       <Sidebar rooms={matrixRooms} styleName="sidebar" />
       <div styleName="content">
         <Router>
@@ -38,6 +38,7 @@ const App = ({ matrix, updateMatrix }) => {
 App.propTypes = {
   matrix: PropTypes.object.isRequired,
   updateMatrix: PropTypes.func.isRequired,
+  logout: PropTypes.func.isRequired,
 };
 
 const selector = state => ({ matrix: state.matrix });
