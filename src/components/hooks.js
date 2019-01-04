@@ -5,6 +5,7 @@ const baseMatrixOptions = {
   baseUrl: 'http://13.59.234.201.xip.io',
 };
 
+// eslint-disable-next-line import/prefer-default-export
 export const useMatrix = options => {
   const [matrixClient, setMatrixClient] = useState(null);
   const [matrixRooms, setMatrixRooms] = useState({});

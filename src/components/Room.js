@@ -1,6 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const Message = ({ event }) => <div>{event.content.body}</div>;
+
+Message.propTypes = {
+  event: PropTypes.object.isRequired,
+};
 
 const Member = ({ event }) => {
   if (event.membership === 'join') {
@@ -12,6 +17,10 @@ const Member = ({ event }) => {
   }
 
   return <div>Unk member event: {event.membership}</div>;
+};
+
+Member.propTypes = {
+  event: PropTypes.object.isRequired,
 };
 
 const eventViews = {
@@ -40,6 +49,15 @@ const Room = ({ matrixClient, id }) => {
       })}
     </div>
   );
+};
+
+Room.propTypes = {
+  matrixClient: PropTypes.object.isRequired,
+  id: PropTypes.string,
+};
+
+Room.defaultProps = {
+  id: null,
 };
 
 export default Room;

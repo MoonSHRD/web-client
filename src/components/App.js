@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Router } from '@reach/router';
-import { updateMatrix } from '../store/actions';
+
+import * as actions from '../store/actions';
 import Login from './Login';
 import Sidebar from './Sidebar';
 import Room from './Room';
@@ -28,8 +30,12 @@ const App = ({ matrix, updateMatrix }) => {
   );
 };
 
+App.propTypes = {
+  matrix: PropTypes.object.isRequired,
+  updateMatrix: PropTypes.func.isRequired,
+};
+
 const selector = state => ({ matrix: state.matrix });
-const actions = { updateMatrix };
 const enhance = connect(
   selector,
   actions
