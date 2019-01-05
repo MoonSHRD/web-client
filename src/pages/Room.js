@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import SendMessage from './SendMessage';
+import SendMessage from 'components/SendMessage';
 import './Room.css';
 
 const Message = ({ event }) => <div>{event.content.body}</div>;

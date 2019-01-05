@@ -4,6 +4,9 @@
     ["react-css-modules", {
       "generateScopedName": "_[path]_[name]__[local]",
     }],
+    ["module-resolver", {
+      "root": ["./src"],
+    }],
     ["import", { "libraryName": "antd", "libraryDirectory": "es", "style": "css" }]
   ],
 }

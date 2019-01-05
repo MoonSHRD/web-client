@@ -1,17 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Router } from '@reach/router';
 
 import * as actions from '../store/actions';
 import Login from './Login';
 import Sidebar from './Sidebar';
-import Room from './Room';
 import MainMenu from './MainMenu';
 import { useMatrix } from './hooks';
 import './App.css';
 
-const App = ({ matrix, updateMatrix, logout }) => {
+const App = ({ matrix, updateMatrix, children, logout }) => {
   const { matrixClient, matrixRooms } = useMatrix(matrix);
 
   if (!matrixClient) {
@@ -26,11 +24,7 @@ const App = ({ matrix, updateMatrix, logout }) => {
     <div styleName="root">
       <MainMenu styleName="menu" logout={logout} />
       <Sidebar rooms={matrixRooms} styleName="sidebar" />
-      <div styleName="content">
-        <Router>
-          <Room path="room/:id" matrixClient={matrixClient} />
-        </Router>
-      </div>
+      <div styleName="content">{children({ matrixClient })}</div>
     </div>
   );
 };
@@ -38,6 +32,7 @@ const App = ({ matrix, updateMatrix, logout }) => {
 App.propTypes = {
   matrix: PropTypes.object.isRequired,
   updateMatrix: PropTypes.func.isRequired,
+  children: PropTypes.func.isRequired,
   logout: PropTypes.func.isRequired,
 };
 

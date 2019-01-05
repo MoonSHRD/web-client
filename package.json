@@ -25,6 +25,7 @@
   "devDependencies": {
     "@babel/core": "^7.2.2",
     "babel-plugin-import": "^1.11.0",
+    "babel-plugin-module-resolver": "^3.1.1",
     "babel-plugin-react-css-modules": "^5.0.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
     "eslint": "^5.11.1",
@@ -42,6 +43,7 @@
   "dependencies": {
     "@reach/router": "^1.2.1",
     "antd": "^3.11.6",
+    "components": "^0.1.0",
     "eslint-config-airbnb": "^17.1.0",
     "humps": "^2.0.1",
     "matrix-js-sdk": "^0.14.2",
