@@ -1,7 +1,7 @@
 import { addKeyToSearch, removeKeyFromSearch } from './url';
 
 test('addKeyToSearch', () => {
-  expect(addKeyToSearch('?hello', 'createModal')).toBe('?createModal&hello');
+  expect(addKeyToSearch('?hello', 'createModal')).toBe('?hello&createModal');
 });
 
 test('removeKeyFromSearch', () => {
