@@ -1,14 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Form, Input, Button } from 'antd';
-
-const PaymentsHistory = ({ className, form }) => (
-  <div>sadasd</div>
-  );
+const PaymentsHistory = ({ className }) => <div className={className}>PaymentsHistory</div>;
 
 PaymentsHistory.propTypes = {
-  form: PropTypes.object.isRequired,
   className: PropTypes.string,
 };
 

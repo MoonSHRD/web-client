@@ -9,7 +9,7 @@ import { hasErrors, makeHandleSubmit } from '../../utils/form';
 import './SendPayment.css';
 
 const SendPayment = ({ className, form }) => {
-  const handleSubmit = makeHandleSubmit(form, (err, values) => {
+  const handleSubmit = makeHandleSubmit(form, (err /* values */) => {
     if (err) {
       return;
     }
