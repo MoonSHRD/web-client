@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SendMessage from 'components/SendMessage';
+import Chat from 'components/templates/Chat';
 import './Room.css';
 
 const Message = ({ event }) => <div>{event.content.body}</div>;
@@ -30,7 +31,7 @@ const eventViews = {
   'm.room.member': Member,
 };
 
-const Room = ({ matrixClient, id }) => {
+const Room = ({ matrixClient, matrixRooms, id }) => {
   const room = matrixClient.getRoom(id);
 
   if (!room) {
@@ -38,26 +39,29 @@ const Room = ({ matrixClient, id }) => {
   }
 
   return (
-    <div styleName="root">
-      <div styleName="timeline">
-        {room.timeline.map(t => {
-          const View = eventViews[t.event.type];
+    <Chat matrixRooms={matrixRooms}>
+      <div styleName="root">
+        <div styleName="timeline">
+          {room.timeline.map(t => {
+            const View = eventViews[t.event.type];
 
-          if (!View) {
-            console.log(t.event);
-            return <div key={t.event.event_id}>Unk event: {t.event.type}</div>;
-          }
+            if (!View) {
+              console.log(t.event);
+              return <div key={t.event.event_id}>Unk event: {t.event.type}</div>;
+            }
 
-          return <View event={t.event} key={t.event.event_id} />;
-        })}
+            return <View event={t.event} key={t.event.event_id} />;
+          })}
+        </div>
+        <SendMessage styleName="send" matrixClient={matrixClient} roomId={id} />
       </div>
-      <SendMessage styleName="send" matrixClient={matrixClient} roomId={id} />
-    </div>
+    </Chat>
   );
 };
 
 Room.propTypes = {
   matrixClient: PropTypes.object.isRequired,
+  matrixRooms: PropTypes.object.isRequired,
   id: PropTypes.string,
 };
 

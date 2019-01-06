@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import * as actions from '../store/actions';
 import Login from './Login';
-import Sidebar from './Sidebar';
 import MainMenu from './MainMenu';
 import { useMatrix } from './hooks';
 import './App.css';
@@ -23,8 +22,7 @@ const App = ({ matrix, updateMatrix, children, logout }) => {
   return (
     <div styleName="root">
       <MainMenu styleName="menu" logout={logout} />
-      <Sidebar rooms={matrixRooms} styleName="sidebar" />
-      <div styleName="content">{children({ matrixClient })}</div>
+      <div styleName="content">{children({ matrixClient, matrixRooms })}</div>
     </div>
   );
 };
