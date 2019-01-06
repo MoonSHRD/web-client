@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router } from '@reach/router';
+import { Router, Location } from '@reach/router';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './components/App';
 import ModalRenderer from './components/atoms/ModalRenderer';
@@ -29,7 +29,7 @@ const tree = (
               <Payments path="payments" {...context} />
               <Settings path="settings" {...context} />
             </Router>
-            <ModalRenderer modals={modals} {...context} />
+            <Location>{props => <ModalRenderer modals={modals} {...props} {...context} />}</Location>
           </React.Fragment>
         )}
       </App>
