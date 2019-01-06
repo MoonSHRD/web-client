@@ -8,6 +8,7 @@ import createStore from './store/createStore';
 
 import Room from './pages/Room';
 import Home from './pages/Home';
+import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Payments from './pages/Payments';
 
@@ -21,6 +22,7 @@ const tree = (
           <Router>
             <Home path="/" {...context} />
             <Room path="room/:id" {...context} />
+            <Profile path="profile" {...context} />
             <Payments path="payments" {...context} />
             <Settings path="settings" {...context} />
           </Router>
