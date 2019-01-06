@@ -1,6 +1,6 @@
 {
   "extends": ["airbnb", "prettier"],
-  "env": { "browser": true },
+  "env": { "browser": true, "jest": true },
   "plugins": [
     "react-hooks"
   ],

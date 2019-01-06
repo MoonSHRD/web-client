@@ -2,11 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { Button, Collapse } from 'antd';
+import ModalLink from 'components/atoms/ModalLink';
 import './ChatSidebar.css';
 
 const Sidebar = ({ className, rooms, ...props }) => (
   <div styleName="root" className={className} {...props}>
-    <Button>Create Community</Button>
+    <ModalLink component={Button} to="createCommunity">
+      Create Community
+    </ModalLink>
     <Collapse defaultActiveKey={['1']}>
       <Collapse.Panel header="Space science community" key="1">
         {Object.keys(rooms).map(id => (

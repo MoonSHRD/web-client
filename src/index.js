@@ -4,7 +4,9 @@ import { Provider } from 'react-redux';
 import { Router } from '@reach/router';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './components/App';
+import ModalRenderer from './components/atoms/ModalRenderer';
 import createStore from './store/createStore';
+import modals from './modals';
 
 import Room from './pages/Room';
 import Home from './pages/Home';
@@ -19,13 +21,16 @@ const tree = (
     <PersistGate loading={null} persistor={persistor}>
       <App>
         {context => (
-          <Router>
-            <Home path="/" {...context} />
-            <Room path="room/:id" {...context} />
-            <Profile path="profile" {...context} />
-            <Payments path="payments" {...context} />
-            <Settings path="settings" {...context} />
-          </Router>
+          <React.Fragment>
+            <Router>
+              <Home path="/" {...context} />
+              <Room path="room/:id" {...context} />
+              <Profile path="profile" {...context} />
+              <Payments path="payments" {...context} />
+              <Settings path="settings" {...context} />
+            </Router>
+            <ModalRenderer modals={modals} {...context} />
+          </React.Fragment>
         )}
       </App>
     </PersistGate>
