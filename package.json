@@ -64,7 +64,6 @@
     "redux": "^4.0.1",
     "redux-persist": "^5.10.0",
     "store": "^2.0.12",
-    "unchanged": "^1.5.2",
-    "use-abortable-fetch": "^0.1.1"
+    "unchanged": "^2.0.0"
   }
 }

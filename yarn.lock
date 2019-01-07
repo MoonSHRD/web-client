@@ -470,7 +470,6 @@
 "@babel/plugin-transform-runtime@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@babel/plugin-transform-runtime/-/plugin-transform-runtime-7.2.0.tgz#566bc43f7d0aedc880eaddbd29168d0f248966ea"
-  integrity sha512-jIgkljDdq4RYDnJyQsiWbdvGeei/0MOTtSHKO/rfbd/mXBxNpdlulMx49L0HQ4pug1fXannxoqCI+fYSle9eSw==
   dependencies:
     "@babel/helper-module-imports" "^7.0.0"
     "@babel/helper-plugin-utils" "^7.0.0"
@@ -2600,7 +2599,7 @@ cssstyle@^1.0.0:
   dependencies:
     cssom "0.3.x"
 
-curriable@^1.0.0:
+curriable@^1.2.4:
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/curriable/-/curriable-1.2.4.tgz#0bbdd0fea2679f195c8f83a33e1a5904ce2b5978"
 
@@ -3382,7 +3381,6 @@ fb-watchman@^2.0.0:
 fbjs-css-vars@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/fbjs-css-vars/-/fbjs-css-vars-1.0.2.tgz#216551136ae02fe255932c3ec8775f18e2c078b8"
-  integrity sha512-b2XGFAFdWZWg0phtAWLHCk836A1Xann+I+Dgd3Gk64MHKZO44FfoD1KxyvbSh0qZsIoXQGGlVztIY+oitJPpRQ==
 
 fbjs@^0.8.0, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.9:
   version "0.8.17"
@@ -3399,7 +3397,6 @@ fbjs@^0.8.0, fbjs@^0.8.15, fbjs@^0.8.16, fbjs@^0.8.9:
 fbjs@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-1.0.0.tgz#52c215e0883a3c86af2a7a776ed51525ae8e0a5a"
-  integrity sha512-MUgcMEJaFhCaF1QtWGnmq9ZDRAzECTCRAF7O6UZIlAlkTs1SasiX9aP0Iw7wfD2mJ7wDTNfg2w7u5fSCwJk1OA==
   dependencies:
     core-js "^2.4.1"
     fbjs-css-vars "^1.0.0"
@@ -8294,11 +8291,11 @@ uglify-js@^3.1.4:
     commander "~2.17.1"
     source-map "~0.6.1"
 
-unchanged@^1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/unchanged/-/unchanged-1.5.2.tgz#5328ae9cebe2644b8115734a96169d5d9c711d62"
+unchanged@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/unchanged/-/unchanged-2.0.0.tgz#22202bc04a0378c47f5f2acedd85ebdc42a34c0e"
   dependencies:
-    curriable "^1.0.0"
+    curriable "^1.2.4"
     pathington "^1.1.5"
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
@@ -8375,10 +8372,6 @@ url@^0.11.0:
   dependencies:
     punycode "1.3.2"
     querystring "0.2.0"
-
-use-abortable-fetch@^0.1.1:
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/use-abortable-fetch/-/use-abortable-fetch-0.1.1.tgz#cd80a3ef6aaea80a62489fcd709aacc641843bee"
 
 use@^3.1.0:
   version "3.1.1"
