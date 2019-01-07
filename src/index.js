@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import { Router, Location } from '@reach/router';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './components/App';
-import ModalRenderer from './components/atoms/ModalRenderer';
+import ModalRenderer from './components/templates/ModalRenderer';
 import createStore from './store/createStore';
 import modals from './modals';
 
