@@ -1,10 +1,41 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'antd';
 import SendMessage from 'components/SendMessage';
 import Chat from 'components/templates/Chat';
+import qs from 'query-string';
 import './Room.css';
 
-const Message = ({ event }) => <div>{event.content.body}</div>;
+const Invoice = ({ amount }) => (
+  <div>
+    Amount: {amount}
+    <Button size="small">Pay</Button>
+  </div>
+);
+
+Invoice.propTypes = {
+  amount: PropTypes.number.isRequired,
+};
+
+const moonshardViews = {
+  invoice: Invoice,
+};
+
+const Message = ({ event }) => {
+  const m = event.content.body.match(/moonshard:view\/(.*)/);
+
+  if (m) {
+    const data = qs.parseUrl(m[1]);
+    const View = moonshardViews[data.url];
+
+    if (View) {
+      // TODO: check dangerouslySetInnerHTML!!!
+      return <View {...data.query} event={event} />;
+    }
+  }
+
+  return <div>{event.content.body}</div>;
+};
 
 Message.propTypes = {
   event: PropTypes.object.isRequired,
