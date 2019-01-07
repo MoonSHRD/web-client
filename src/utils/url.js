@@ -5,4 +5,5 @@ const stringifyOptions = { sort: false };
 
 export const removeKeyFromSearch = (search, key) => `?${qs.stringify(remove(key, qs.parse(search)), stringifyOptions)}`;
 
-export const addKeyToSearch = (search, key) => `?${qs.stringify(set(key, null, qs.parse(search)), stringifyOptions)}`;
+export const addKeyToSearch = (search, key, params = null) =>
+  `?${qs.stringify(set(key, params && JSON.stringify(params), qs.parse(search)), stringifyOptions)}`;

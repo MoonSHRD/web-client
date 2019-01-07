@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-0",
+    "@babel/plugin-transform-runtime": "^7.2.0",
     "@babel/preset-react": "^7.0.0",
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
@@ -44,14 +45,15 @@
     "lint-staged": "^8.1.0",
     "parcel-bundler": "^1.11.0",
     "postcss-modules": "^1.4.1",
-    "prettier": "^1.15.3",
-    "regenerator-runtime": "^0.13.1"
+    "prettier": "^1.15.3"
   },
   "dependencies": {
+    "@babel/runtime": "^7.2.0",
     "@reach/router": "^1.2.1",
     "antd": "^3.11.6",
     "components": "^0.1.0",
     "eslint-config-airbnb": "^17.1.0",
+    "fbjs": "^1.0.0",
     "humps": "^2.0.1",
     "matrix-js-sdk": "^0.14.2",
     "prop-types": "^15.6.2",

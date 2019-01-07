@@ -2,41 +2,37 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { Button, Collapse } from 'antd';
+import { useJoinedGroups } from 'components/hooks';
 import ModalLink from 'components/atoms/ModalLink';
 import './ChatSidebar.css';
 
-const Sidebar = ({ className, rooms, ...props }) => (
-  <div styleName="root" className={className} {...props}>
-    <ModalLink component={Button} to="createCommunity">
-      Create Community
-    </ModalLink>
-    <Collapse defaultActiveKey={['1']}>
-      <Collapse.Panel header="Space science community" key="1">
-        {Object.keys(rooms).map(id => (
-          <div key={id}>
-            <Link to={`/room/${id}`}>{rooms[id].name}</Link>
-          </div>
+const Sidebar = ({ className, rooms, ...props }) => {
+  const joinedGroups = useJoinedGroups();
+
+  return (
+    <div styleName="root" className={className} {...props}>
+      <ModalLink component={Button} to="createCommunity">
+        Create Community
+      </ModalLink>
+      <Collapse defaultActiveKey={joinedGroups.map(g => g.id)} key={joinedGroups.length}>
+        {joinedGroups.map(group => (
+          <Collapse.Panel header={group.profile && group.profile.name} key={group.id}>
+            {group.rooms &&
+              group.rooms.chunk.map(room => (
+                <div key={room.room_id}>
+                  <Link to={`/room/${room.room_id}`}>{room.name}</Link>
+                </div>
+              ))}
+            {(!group.rooms || group.rooms.chunk.length === 0) && <div>Rooms not found</div>}
+            <ModalLink component={Button} to="createRoom" params={{ groupId: group.id }} size="small">
+              Create Room
+            </ModalLink>
+          </Collapse.Panel>
         ))}
-        <Button size="small">Create Chat</Button>
-      </Collapse.Panel>
-      <Collapse.Panel header="City wolves" key="2">
-        <p>none</p>
-      </Collapse.Panel>
-      <Collapse.Panel header="Chill" key="3">
-        <p>none</p>
-      </Collapse.Panel>
-      <Collapse.Panel header="Travels" key="4">
-        <p>none</p>
-      </Collapse.Panel>
-      <Collapse.Panel header="Coffee mania" key="5">
-        <p>none</p>
-      </Collapse.Panel>
-      <Collapse.Panel header="Love in forest" key="6">
-        <p>none</p>
-      </Collapse.Panel>
-    </Collapse>
-  </div>
-);
+      </Collapse>
+    </div>
+  );
+};
 
 Sidebar.propTypes = {
   rooms: PropTypes.object.isRequired,

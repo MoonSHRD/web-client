@@ -2,6 +2,13 @@
   "presets": ["@babel/preset-env", "@babel/preset-react"],
   "plugins": [
     "transform-class-properties",
+    ["@babel/plugin-transform-runtime",
+      {
+        "corejs": false,
+        "helpers": true,
+        "regenerator": true
+      }
+    ],
     ["react-css-modules", {
       "generateScopedName": "_[path]_[name]__[local]",
     }],
