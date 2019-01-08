@@ -22,7 +22,7 @@ const useFetchEvents = () => {
   const data = [
     ...enrichWithDirection(response, 'data.to', 'to'),
     ...enrichWithDirection(response, 'data.from', 'from'),
-  ].sort((evOne, evTwo) => evOne.blockNumber - evTwo.blockNumber);
+  ].sort((evOne, evTwo) => evTwo.blockNumber - evOne.blockNumber);
 
   return [{ ...response, data }, refresh];
 };
@@ -35,7 +35,7 @@ const Payments = () => {
       <h2>Payments</h2>
 
       <div>
-        <SendPayment onSubmit={() => refreshEvents()} />
+        <SendPayment onSuccess={() => refreshEvents()} />
       </div>
 
       <div>

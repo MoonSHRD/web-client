@@ -1,4 +1,4 @@
-const { useState, useEffect, useLayoutEffect, useRef } = require('react');
+import { useState, useEffect, useLayoutEffect, useRef } from 'react';
 
 class RequestError {
   constructor(data) {
@@ -6,8 +6,8 @@ class RequestError {
   }
 }
 
-const fetchData = (url, signal, setState) => {
-  fetch(url, { signal })
+export const fetchData = (url, setState = () => {}, options = {}) =>
+  fetch(url, options)
     .then(rsp => (rsp.ok ? rsp : Promise.reject(new RequestError({ message: rsp.statusText, status: rsp.status }))))
     .then(rsp => rsp.json())
     .then(data => {
@@ -26,9 +26,8 @@ const fetchData = (url, signal, setState) => {
         loading: oldState.loading - 1,
       }));
     });
-};
 
-const useAbortableFetch = url => {
+const useAbortableFetch = (url, options = {}) => {
   const [state, setState] = useState({
     data: null,
     loading: 0,
@@ -54,11 +53,13 @@ const useAbortableFetch = url => {
         controller,
       }));
 
-      fetchData(url, controller.signal, responseState => {
+      const cb = responseState => {
         if (isMounted.current) {
           setState(responseState);
         }
-      });
+      };
+
+      fetchData(url, cb, { ...options, signal: controller.signal });
 
       return () => controller.abort();
     },
@@ -73,4 +74,4 @@ const useAbortableFetch = url => {
   };
 };
 
-module.exports = useAbortableFetch;
+export default useAbortableFetch;
