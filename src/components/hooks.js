@@ -4,7 +4,7 @@ import debounce from 'fbjs/lib/debounceCore';
 import MatrixClientContext from './MatrixClientContext';
 
 const baseMatrixOptions = {
-  baseUrl: 'https://13.59.234.201.xip.io',
+  baseUrl: process.env.MATRIX_ENDPOINT || 'https://13.59.234.201.xip.io',
 };
 
 export const useMatrix = options => {
