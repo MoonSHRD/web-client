@@ -1,0 +1,72 @@
+enum Direction {
+  BACKWARD
+  FORWARD
+}
+
+type Group {
+  groupId: String!
+  name: String
+  avatarUrl: String
+  shortDescription: String
+  longDescription: String
+  isPublic: Boolean
+  joinPolicy: String
+}
+
+type GroupMembership {
+  groupId: String!
+  userId: String!
+  isAdmin: Boolean!
+  membership: String!
+  isPublicised: Boolean!
+  content: String!
+  group: Group!
+}
+
+type MessageContent {
+  body: String
+}
+
+input NewRoomMessageInput {
+  roomId: ID!
+  clientSubscriptionId: String
+}
+
+type NewRoomMessagePayload {
+  event: RoomMessage!
+  clientSubscriptionId: String
+}
+
+"""An object with an ID"""
+interface Node {
+  """The id of the object."""
+  id: ID!
+}
+
+type Query {
+  viewer(accessToken: String, userId: String): Viewer
+}
+
+type Room implements Node {
+  """The ID of an object"""
+  id: ID!
+  isPublic: Boolean
+  creator: String
+  messages(from: String, to: String, dir: Direction, limit: Int): [RoomMessage!]!
+}
+
+type RoomMessage {
+  id: ID!
+  roomId: String!
+  content: MessageContent!
+}
+
+type Subscription {
+  newRoomMessage(input: NewRoomMessageInput!): NewRoomMessagePayload
+}
+
+type Viewer {
+  groupMembership(isAdmin: Boolean): [GroupMembership!]!
+  room(id: ID!): Room
+}
+

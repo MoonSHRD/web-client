@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'antd';
+import { QueryRenderer, requestSubscription, graphql } from 'react-relay';
+import RelayEnvironmentContext from 'components/RelayEnvironmentContext';
 import SendMessage from 'components/SendMessage';
 import Chat from 'components/templates/Chat';
 import qs from 'query-string';
@@ -62,31 +64,89 @@ const eventViews = {
   'm.room.member': Member,
 };
 
+const subscription = graphql`
+  subscription RoomSubscription($input: NewRoomMessageInput!) {
+    newRoomMessage(input: $input) {
+      event {
+        content {
+          body
+        }
+      }
+    }
+  }
+`;
+
+const query = graphql`
+  query RoomQuery($id: ID!) {
+    viewer {
+      room(id: $id) {
+        id
+      }
+    }
+  }
+`;
+
 const Room = ({ matrixClient, matrixRooms, id }) => {
+  const relayEnvironment = useContext(RelayEnvironmentContext);
   const room = matrixClient.getRoom(id);
+
+  useEffect(
+    () => {
+      const sub = requestSubscription(relayEnvironment, {
+        subscription,
+        variables: {
+          input: { roomId: id },
+        },
+      });
+
+      return () => sub.dispose();
+    },
+    [relayEnvironment, id]
+  );
 
   if (!room) {
     return null;
   }
 
   return (
-    <Chat matrixRooms={matrixRooms}>
-      <div styleName="root">
-        <div styleName="timeline">
-          {room.timeline.map(t => {
-            const View = eventViews[t.event.type];
+    <QueryRenderer
+      environment={relayEnvironment}
+      query={query}
+      variables={{ id }}
+      render={({ props, error }) => {
+        if (error) {
+          return <div>Error: {error.toString()}</div>;
+        }
 
-            if (!View) {
-              console.log(t.event);
-              return <div key={t.event.event_id}>Unk event: {t.event.type}</div>;
-            }
+        if (!props) {
+          return <div>Loading...</div>;
+        }
 
-            return <View event={t.event} key={t.event.event_id} />;
-          })}
-        </div>
-        <SendMessage styleName="send" matrixClient={matrixClient} roomId={id} />
-      </div>
-    </Chat>
+        console.log(props);
+        // eslint-disable-next-line react/prop-types
+        const { room: relayRoom } = props.viewer;
+
+        return (
+          <Chat matrixRooms={matrixRooms}>
+            <div styleName="root">
+              <div styleName="timeline">
+                {room.timeline.map(t => {
+                  const View = eventViews[t.event.type];
+
+                  if (!View) {
+                    console.log(t.event);
+                    return <div key={t.event.event_id}>Unk event: {t.event.type}</div>;
+                  }
+
+                  return <View event={t.event} key={t.event.event_id} />;
+                })}
+              </div>
+              <SendMessage styleName="send" matrixClient={matrixClient} roomId={relayRoom.id} />
+            </div>
+          </Chat>
+        );
+      }}
+    />
   );
 };
 
