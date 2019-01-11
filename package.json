@@ -1,8 +1,8 @@
 {
   "private": true,
   "scripts": {
-    "start": "parcel index.html",
-    "build": "parcel build index.html --no-source-maps",
+    "start": "yarn relay && parcel index.html",
+    "build": "yarn relay && parcel build index.html --no-source-maps",
     "deploy": "yarn build && scp -i secrets/moonshard-dev-app dist/* ubuntu@13.59.234.201:~/web",
     "relay": "relay-compiler --src ./src --schema ./schema.graphql",
     "lint": "eslint src"
