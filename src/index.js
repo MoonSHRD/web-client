@@ -4,9 +4,11 @@ import { Provider } from 'react-redux';
 import { Router, Location } from '@reach/router';
 import { PersistGate } from 'redux-persist/integration/react';
 import App from './components/App';
+import RelayEnvironmentContext from './components/RelayEnvironmentContext';
 import MatrixClientContext from './components/MatrixClientContext';
 import ModalRenderer from './components/templates/ModalRenderer';
 import createStore from './store/createStore';
+import createRelayEnvironment from './createRelayEnvironment';
 import modals from './modals';
 
 import Room from './pages/Room';
@@ -17,6 +19,7 @@ import Payments from './pages/Payments';
 import Community from './pages/Community';
 
 const { store, persistor } = createStore();
+const relayEnvironment = createRelayEnvironment(store);
 
 const tree = (
   <Provider store={store}>
@@ -24,15 +27,17 @@ const tree = (
       <App>
         {context => (
           <MatrixClientContext.Provider value={context.matrixClient}>
-            <Router>
-              <Home path="/" {...context} />
-              <Room path="room/:id" {...context} />
-              <Community path="community/:id" {...context} />
-              <Profile path="profile" {...context} />
-              <Payments path="payments" {...context} />
-              <Settings path="settings" {...context} />
-            </Router>
-            <Location>{props => <ModalRenderer modals={modals} {...props} {...context} />}</Location>
+            <RelayEnvironmentContext.Provider value={relayEnvironment}>
+              <Router>
+                <Home path="/" {...context} />
+                <Room path="room/:id" {...context} relayEnvironment={relayEnvironment} />
+                <Community path="community/:id" {...context} />
+                <Profile path="profile" {...context} />
+                <Payments path="payments" {...context} />
+                <Settings path="settings" {...context} />
+              </Router>
+              <Location>{props => <ModalRenderer modals={modals} {...props} {...context} />}</Location>
+            </RelayEnvironmentContext.Provider>
           </MatrixClientContext.Provider>
         )}
       </App>

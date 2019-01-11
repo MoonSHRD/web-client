@@ -1,0 +1,100 @@
+type Group {
+  groupId: String!
+  name: String
+  avatarUrl: String
+  shortDescription: String
+  longDescription: String
+  isPublic: Boolean
+  joinPolicy: String
+}
+
+type GroupMembership {
+  groupId: String!
+  userId: String!
+  isAdmin: Boolean!
+  membership: String!
+  isPublicised: Boolean!
+  content: String!
+  group: Group!
+}
+
+type MessageContent {
+  body: String
+}
+
+input NewRoomMessageInput {
+  roomId: ID!
+  clientSubscriptionId: String
+}
+
+type NewRoomMessagePayload {
+  edge: RoomMessageEdge!
+  clientSubscriptionId: String
+}
+
+# An object with an ID
+interface Node {
+  # The id of the object.
+  id: ID!
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: String
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: String
+}
+
+type Query {
+  viewer(accessToken: String, userId: String): Viewer
+}
+
+type Room implements Node {
+  id: ID!
+  isPublic: Boolean
+  creator: String
+  messages(after: String, first: Int, before: String, last: Int): RoomMessageConnection
+}
+
+type RoomMessage {
+  id: ID!
+  roomId: String!
+  content: MessageContent!
+}
+
+# A connection to a list of items.
+type RoomMessageConnection {
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # A list of edges.
+  edges: [RoomMessageEdge]
+}
+
+# An edge in a connection.
+type RoomMessageEdge {
+  # The item at the end of the edge
+  node: RoomMessage
+
+  # A cursor for use in pagination
+  cursor: String!
+}
+
+type Subscription {
+  newRoomMessage(input: NewRoomMessageInput!): NewRoomMessagePayload
+}
+
+type Viewer {
+  id: ID!
+  groupMembership(isAdmin: Boolean): [GroupMembership!]!
+  room(id: ID!): Room
+}
+
