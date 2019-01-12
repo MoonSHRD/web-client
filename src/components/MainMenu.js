@@ -1,30 +1,27 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
-import { Button } from 'antd';
 import './MainMenu.css';
 
-const MainMenu = ({ className, logout, ...props }) => (
+const MainMenu = ({ className, ...props }) => (
   <div className={className} styleName="root" {...props}>
     <div styleName="logo" />
-    <div>
+    <div styleName="item">
       <Link to="/">Home</Link>
     </div>
-    <div>
+    <div styleName="item">
       <Link to="/profile">Profile</Link>
     </div>
-    <div>
+    <div styleName="item">
       <Link to="/payments">Payments</Link>
     </div>
-    <div>
+    <div styleName="item">
       <Link to="/settings">Settings</Link>
     </div>
-    <Button onClick={logout}>Logout</Button>
   </div>
 );
 
 MainMenu.propTypes = {
-  logout: PropTypes.func.isRequired,
   className: PropTypes.string,
 };
 

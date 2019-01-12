@@ -11,9 +11,6 @@ const Sidebar = ({ className, rooms, ...props }) => {
 
   return (
     <div styleName="root" className={className} {...props}>
-      <ModalLink component={Button} to="createCommunity">
-        Create Community
-      </ModalLink>
       <Collapse defaultActiveKey={joinedGroups.map(g => g.id)} key={joinedGroups.length}>
         {joinedGroups.map(group => (
           <Collapse.Panel header={group.profile && group.profile.name} key={group.id}>

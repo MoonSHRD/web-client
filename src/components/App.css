@@ -2,6 +2,8 @@ body,
 html {
   padding: 0;
   margin: 0;
+  background: #212633;
+  color: white;
 }
 
 .root {
@@ -10,12 +12,7 @@ html {
 }
 
 .menu {
-  width: 80px;
-}
-
-.sidebar {
-  width: 200px;
-  overflow-y: auto;
+  width: 95px;
 }
 
 .content {

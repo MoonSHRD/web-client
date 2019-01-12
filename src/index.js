@@ -11,6 +11,9 @@ import createStore from './store/createStore';
 import createRelayEnvironment from './createRelayEnvironment';
 import modals from './modals';
 
+import './antd-theme.less';
+import './scrollbar.css';
+
 import Room from './pages/Room';
 import Home from './pages/Home';
 import Profile from './pages/Profile';
