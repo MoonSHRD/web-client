@@ -25,7 +25,7 @@ export default store => {
     const { matrix } = store.getState();
 
     const client = new SubscriptionClient(process.env.SUBSCRIBE_ENDPOINT, {
-      reconnect: true,
+      reconnect: false,
       connectionParams: matrix,
     });
 

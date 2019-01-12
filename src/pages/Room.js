@@ -27,7 +27,7 @@ const query = graphql`
       room(id: $id) {
         id
 
-        messages(last: 10) @connection(key: "Room_messages") {
+        messages(last: 30) @connection(key: "Room_messages") {
           edges {
             ...RoomTimeline_messageEdges
           }

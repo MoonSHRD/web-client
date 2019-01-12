@@ -23,7 +23,7 @@ const SendMessage = ({ className, matrixClient, form, roomId }) => {
     <Form layout="inline" onSubmit={handleSubmit} className={className} styleName="root">
       <Form.Item styleName="message">
         {form.getFieldDecorator('message', { rules: [{ required: true, message: 'Please input your message!' }] })(
-          <Input placeholder="Message" autoFocus />
+          <Input placeholder="Message" autoFocus autoComplete="off" />
         )}
       </Form.Item>
       <Form.Item styleName="submit">
