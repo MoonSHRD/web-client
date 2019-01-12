@@ -1,18 +1,12 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { QueryRenderer, requestSubscription, graphql } from 'react-relay';
 import SendMessage from 'components/SendMessage';
-import RoomMessage from 'components/organisms/RoomMessage';
+import RoomTimeline from 'components/organisms/RoomTimeline';
 import RoomHeader from 'components/molecules/RoomHeader';
 import RelayEnvironmentContext from 'components/RelayEnvironmentContext';
 import Chat from 'components/templates/Chat';
 import './Room.css';
-
-// import RoomMember from 'components/organisms/RoomMember';
-// const eventViews = {
-//   'm.room.message': RoomMessage,
-//   'm.room.member': RoomMember,
-// };
 
 const subscription = graphql`
   subscription RoomSubscription($input: NewRoomMessageInput!) {
@@ -20,10 +14,7 @@ const subscription = graphql`
       edge {
         node {
           id
-
-          content {
-            body
-          }
+          ...RoomMessage
         }
       }
     }
@@ -38,12 +29,7 @@ const query = graphql`
 
         messages(last: 10) @connection(key: "Room_messages") {
           edges {
-            node {
-              id
-              content {
-                body
-              }
-            }
+            ...RoomTimeline_messageEdges
           }
         }
       }
@@ -53,7 +39,6 @@ const query = graphql`
 
 const Room = ({ id, matrixClient }) => {
   const relayEnvironment = useContext(RelayEnvironmentContext);
-  const timeline = useRef(null);
 
   useEffect(
     () => {
@@ -67,12 +52,6 @@ const Room = ({ id, matrixClient }) => {
         },
         onError: err => {
           console.log(err);
-        },
-        onNext: res => {
-          console.log(res);
-          setTimeout(() => {
-            timeline.current.scroll(0, 1000);
-          }, 100);
         },
         configs: [
           {
@@ -120,11 +99,7 @@ const Room = ({ id, matrixClient }) => {
           <Chat matrixRooms={{}}>
             <div styleName="root">
               <RoomHeader />
-              <div styleName="timeline" ref={timeline}>
-                {room.messages.edges.map(i => (
-                  <RoomMessage key={i.node.id} data={i.node} />
-                ))}
-              </div>
+              <RoomTimeline messageEdges={room.messages.edges} />
               <SendMessage styleName="send" matrixClient={matrixClient} roomId={room.id} />
             </div>
           </Chat>
