@@ -1,18 +1,18 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { QueryRenderer, requestSubscription, graphql } from 'react-relay';
 import SendMessage from 'components/SendMessage';
 import RoomMessage from 'components/organisms/RoomMessage';
-import RoomMember from 'components/organisms/RoomMember';
 import RoomHeader from 'components/molecules/RoomHeader';
 import RelayEnvironmentContext from 'components/RelayEnvironmentContext';
 import Chat from 'components/templates/Chat';
 import './Room.css';
 
-const eventViews = {
-  'm.room.message': RoomMessage,
-  'm.room.member': RoomMember,
-};
+// import RoomMember from 'components/organisms/RoomMember';
+// const eventViews = {
+//   'm.room.message': RoomMessage,
+//   'm.room.member': RoomMember,
+// };
 
 const subscription = graphql`
   subscription RoomSubscription($input: NewRoomMessageInput!) {
@@ -51,9 +51,9 @@ const query = graphql`
   }
 `;
 
-const Room = ({ matrixClient, matrixRooms, id }) => {
+const Room = ({ id, matrixClient }) => {
   const relayEnvironment = useContext(RelayEnvironmentContext);
-  const room = matrixClient.getRoom(id);
+  const timeline = useRef(null);
 
   useEffect(
     () => {
@@ -68,6 +68,12 @@ const Room = ({ matrixClient, matrixRooms, id }) => {
         onError: err => {
           console.log(err);
         },
+        onNext: res => {
+          console.log(res);
+          setTimeout(() => {
+            timeline.current.scroll(0, 1000);
+          }, 100);
+        },
         configs: [
           {
             type: 'RANGE_ADD',
@@ -78,7 +84,7 @@ const Room = ({ matrixClient, matrixRooms, id }) => {
                 rangeBehavior: 'append',
               },
             ],
-            edgeName: 'edgename',
+            edgeName: 'edge',
           },
         ],
       });
@@ -87,10 +93,6 @@ const Room = ({ matrixClient, matrixRooms, id }) => {
     },
     [relayEnvironment, id]
   );
-
-  if (!room) {
-    return null;
-  }
 
   return (
     <QueryRenderer
@@ -107,25 +109,23 @@ const Room = ({ matrixClient, matrixRooms, id }) => {
         }
 
         // eslint-disable-next-line react/prop-types
-        const { room: relayRoom } = props.viewer;
+        if (!props.viewer) {
+          return <div>Viewer not found</div>;
+        }
+
+        // eslint-disable-next-line react/prop-types
+        const { room } = props.viewer;
 
         return (
-          <Chat matrixRooms={matrixRooms}>
+          <Chat matrixRooms={{}}>
             <div styleName="root">
               <RoomHeader />
-              <div styleName="timeline">
-                {room.timeline.map(t => {
-                  const View = eventViews[t.event.type];
-
-                  if (!View) {
-                    console.log(t.event);
-                    return <div key={t.event.event_id}>Unk event: {t.event.type}</div>;
-                  }
-
-                  return <View event={t.event} key={t.event.event_id} />;
-                })}
+              <div styleName="timeline" ref={timeline}>
+                {room.messages.edges.map(i => (
+                  <RoomMessage key={i.node.id} data={i.node} />
+                ))}
               </div>
-              <SendMessage styleName="send" matrixClient={matrixClient} roomId={relayRoom.id} />
+              <SendMessage styleName="send" matrixClient={matrixClient} roomId={room.id} />
             </div>
           </Chat>
         );
@@ -135,9 +135,8 @@ const Room = ({ matrixClient, matrixRooms, id }) => {
 };
 
 Room.propTypes = {
-  matrixClient: PropTypes.object.isRequired,
-  matrixRooms: PropTypes.object.isRequired,
   id: PropTypes.string,
+  matrixClient: PropTypes.object.isRequired,
 };
 
 Room.defaultProps = {

@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import * as actions from '../store/actions';
+import * as actions from 'store/actions';
 import Login from './Login';
 import MainMenu from './MainMenu';
 import { useMatrix } from './hooks';
 import './App.css';
 
-const App = ({ matrix, updateMatrix, children, logout }) => {
+const App = ({ matrix, updateMatrix, children }) => {
   const { matrixClient, matrixRooms } = useMatrix(matrix);
 
   if (!matrixClient) {
@@ -21,7 +21,7 @@ const App = ({ matrix, updateMatrix, children, logout }) => {
 
   return (
     <div styleName="root">
-      <MainMenu styleName="menu" logout={logout} />
+      <MainMenu styleName="menu" />
       <div styleName="content">{children({ matrixClient, matrixRooms })}</div>
     </div>
   );
@@ -31,7 +31,6 @@ App.propTypes = {
   matrix: PropTypes.object.isRequired,
   updateMatrix: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
-  logout: PropTypes.func.isRequired,
 };
 
 const selector = state => ({ matrix: state.matrix });

@@ -19,29 +19,29 @@ const moonshardViews = {
   invoice: Invoice,
 };
 
-const Message = ({ event }) => {
-  const m = event.content.body.match(/moonshard:view\/(.*)/);
+const Message = ({ data }) => {
+  const m = data.content.body.match(/moonshard:view\/(.*)/);
 
   if (m) {
-    const data = qs.parseUrl(m[1]);
-    const View = moonshardViews[data.url];
+    const params = qs.parseUrl(m[1]);
+    const View = moonshardViews[params.url];
 
     if (View) {
       // TODO: check dangerouslySetInnerHTML!!!
-      return <View {...data.query} event={event} />;
+      return <View {...params.query} data={data} />;
     }
   }
 
   return (
     <div styleName="root">
       <div styleName="avatar" />
-      <div styleName="text">{event.content.body}</div>
+      <div styleName="text">{data.content.body}</div>
     </div>
   );
 };
 
 Message.propTypes = {
-  event: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 export default Message;

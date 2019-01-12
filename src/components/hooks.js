@@ -1,6 +1,5 @@
 import { useContext, useState, useEffect } from 'react';
 import sdk from 'matrix-js-sdk';
-import debounce from 'fbjs/lib/debounceCore';
 import MatrixClientContext from './MatrixClientContext';
 
 const baseMatrixOptions = {
@@ -9,7 +8,6 @@ const baseMatrixOptions = {
 
 export const useMatrix = options => {
   const [matrixClient, setMatrixClient] = useState(null);
-  const [matrixRooms, setMatrixRooms] = useState({});
 
   useEffect(
     () => {
@@ -20,19 +18,9 @@ export const useMatrix = options => {
 
       client.startClient({ initialSyncLimit: 10 });
 
-      const debouncedSetMatrixRooms = debounce(setMatrixRooms, 500);
-      const handleUpdate = e => {
-        if (e.getType().indexOf('m.room') === 0) {
-          debouncedSetMatrixRooms(client.store.rooms);
-        }
-      };
-
-      client.on('event', handleUpdate);
-
       setMatrixClient(client);
 
       return () => {
-        client.removeListener('event', handleUpdate);
         client.stopClient();
       };
     },
@@ -43,7 +31,7 @@ export const useMatrix = options => {
     window.matrixClient = matrixClient;
   }
 
-  return { matrixClient, matrixRooms };
+  return { matrixClient };
 };
 
 export const usePromise = (fn, resolveCondition) => {
