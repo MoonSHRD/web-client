@@ -6,6 +6,19 @@ import { useJoinedGroups } from 'components/hooks';
 import ModalLink from 'components/atoms/ModalLink';
 import './ChatSidebar.css';
 
+const getHeader = data => {
+  if (!data.profile) {
+    return '???';
+  }
+
+  return (
+    <div>
+      {data.profile.name}
+      <Link to={`/community/${data.id}`}>View</Link>
+    </div>
+  );
+};
+
 const Sidebar = ({ className, rooms, ...props }) => {
   const joinedGroups = useJoinedGroups();
 
@@ -13,7 +26,7 @@ const Sidebar = ({ className, rooms, ...props }) => {
     <div styleName="root" className={className} {...props}>
       <Collapse defaultActiveKey={joinedGroups.map(g => g.id)} key={joinedGroups.length}>
         {joinedGroups.map(group => (
-          <Collapse.Panel header={group.profile && group.profile.name} key={group.id}>
+          <Collapse.Panel header={getHeader(group)} key={group.id}>
             {group.rooms &&
               group.rooms.chunk.map(room => (
                 <div key={room.room_id}>

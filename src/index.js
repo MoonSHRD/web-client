@@ -34,7 +34,7 @@ const tree = (
               <Router>
                 <Home path="/" {...context} />
                 <Room path="room/:id" {...context} relayEnvironment={relayEnvironment} />
-                <Community path="community/:id" {...context} />
+                <Community path="community/:id" {...context} relayEnvironment={relayEnvironment} />
                 <Profile path="profile" {...context} />
                 <Payments path="payments" {...context} />
                 <Settings path="settings" {...context} />
