@@ -7,14 +7,16 @@ import Loading from 'components/molecules/Loading';
 export default (query, config = {}) => Component => wrapperProps => {
   const environment = useContext(RelayEnvironmentContext);
 
-  const { getVariables } = config;
+  const { getVariables, ...queryProps } = config;
   const variables = getVariables ? getVariables(wrapperProps) : config.variables;
 
   return (
     <QueryLookupRenderer
+      lookup
       query={query}
       variables={variables}
       environment={environment}
+      {...queryProps}
       render={({ error, retry, props }) => {
         if (error) {
           const ErrorComponent = config.error || QueryRendererError;
