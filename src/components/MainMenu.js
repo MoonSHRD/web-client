@@ -43,7 +43,7 @@ const MainMenu = ({ className, ...props }) => (
       <div styleName="logo" />
     </Link>
     {links.map(item => (
-      <IconLink to={item.to} ke={item.to}>
+      <IconLink to={item.to} key={item.to}>
         <Icon type={item.icon} />
       </IconLink>
     ))}

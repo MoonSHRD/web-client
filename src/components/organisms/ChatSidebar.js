@@ -2,32 +2,27 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { Button, Collapse } from 'antd';
-import { useJoinedGroups } from 'components/hooks';
+import { graphql } from 'react-relay';
 import Search from 'components/molecules/Search';
 import ModalLink from 'components/atoms/ModalLink';
+import withQueryRenderer from 'hocs/withQueryRenderer';
 import './ChatSidebar.css';
 
-const getHeader = data => {
-  if (!data.profile) {
-    return '???';
-  }
+const getHeader = data => (
+  <div>
+    {data.name}
+    <Link to={`/community/${data.id}`}>View</Link>
+  </div>
+);
 
-  return (
-    <div>
-      {data.profile.name}
-      <Link to={`/community/${data.id}`}>View</Link>
-    </div>
-  );
-};
-
-const Sidebar = ({ className, rooms, ...props }) => {
-  const joinedGroups = useJoinedGroups();
+const Sidebar = ({ className, viewer, ...props }) => {
+  const { groupMembership } = viewer;
 
   return (
     <div styleName="root" className={className} {...props}>
       <Search />
-      <Collapse defaultActiveKey={joinedGroups.map(g => g.id)} key={joinedGroups.length}>
-        {joinedGroups.map(group => (
+      <Collapse defaultActiveKey={groupMembership.map(gm => gm.group.id)} key={groupMembership.length}>
+        {groupMembership.map(({ group }) => (
           <Collapse.Panel header={getHeader(group)} key={group.id}>
             {group.rooms &&
               group.rooms.chunk.map(room => (
@@ -47,12 +42,27 @@ const Sidebar = ({ className, rooms, ...props }) => {
 };
 
 Sidebar.propTypes = {
-  rooms: PropTypes.object.isRequired,
   className: PropTypes.string,
+  viewer: PropTypes.object.isRequired,
 };
 
 Sidebar.defaultProps = {
   className: undefined,
 };
 
-export default Sidebar;
+const query = graphql`
+  query ChatSidebarQuery {
+    viewer {
+      groupMembership {
+        group {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+
+const enhance = withQueryRenderer(query);
+
+export default enhance(Sidebar);
