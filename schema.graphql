@@ -6,6 +6,7 @@ type Group implements Node {
   longDescription: String
   isPublic: Boolean
   joinPolicy: String
+  rooms: [Room!]!
 }
 
 type GroupMembership {
@@ -56,12 +57,14 @@ type PageInfo {
 type Query {
   viewer(accessToken: String, userId: String): Viewer
   group(id: ID!): Group
+  groups: [Group!]!
 }
 
 type Room implements Node {
   id: ID!
   isPublic: Boolean
   creator: String
+  name: String
   messages(after: String, first: Int, before: String, last: Int): RoomMessageConnection
 }
 
