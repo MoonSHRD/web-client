@@ -13,6 +13,7 @@ html {
 
 .menu {
   width: 95px;
+  min-width: 95px;
 }
 
 .content {
