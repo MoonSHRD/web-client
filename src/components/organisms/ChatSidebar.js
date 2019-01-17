@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
 import { Button, Collapse } from 'antd';
 import { useJoinedGroups } from 'components/hooks';
+import Search from 'components/molecules/Search';
 import ModalLink from 'components/atoms/ModalLink';
 import './ChatSidebar.css';
 
@@ -24,6 +25,7 @@ const Sidebar = ({ className, rooms, ...props }) => {
 
   return (
     <div styleName="root" className={className} {...props}>
+      <Search />
       <Collapse defaultActiveKey={joinedGroups.map(g => g.id)} key={joinedGroups.length}>
         {joinedGroups.map(group => (
           <Collapse.Panel header={getHeader(group)} key={group.id}>

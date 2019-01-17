@@ -1,0 +1,24 @@
+.root {
+  height: 90px;
+  display: flex;
+  align-items: center;
+  padding: 0 40px 0 30px;
+}
+
+.icon {
+  width: 16px;
+  margin-right: 10px;
+  font-size: 18px;
+  color: #dddfe7;
+}
+
+.input {
+  flex: 1;
+  background: transparent;
+  border: 0;
+  padding: 0 5px;
+}
+
+.input::placeholder {
+  color: #dddfe7;
+}

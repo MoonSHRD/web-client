@@ -1,6 +1,6 @@
 .root {
   display: flex;
-  background: #242a37;
+  background: white;
   align-items: center;
   height: 90px;
 }
@@ -14,6 +14,6 @@
 
 .count {
   white-space: nowrap;
-  color: #a3a3a3;
+  color: #b1b1b1;
   padding: 0 35px;
 }
