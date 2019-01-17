@@ -20,8 +20,8 @@ export default store => {
     }).then(response => response.json());
   }
 
-  const setupSubscription = (config, variables, cacheConfig, observer) => {
-    const query = config.text;
+  const setupSubscription = (request, variables, cacheConfig, observer) => {
+    const query = request.text;
     const { matrix } = store.getState();
 
     const client = new SubscriptionClient(process.env.SUBSCRIBE_ENDPOINT, {
@@ -29,7 +29,7 @@ export default store => {
       connectionParams: matrix,
     });
 
-    client.request({ query, variables }).subscribe({
+    const sub = client.request({ query, variables }).subscribe({
       next(data) {
         return observer.onNext(data);
       },
@@ -40,6 +40,10 @@ export default store => {
         return observer.onCompleted();
       },
     });
+
+    return {
+      dispose: () => sub.unsubscribe(),
+    };
   };
 
   const environment = new Environment({
