@@ -36,7 +36,9 @@ const Message = ({ data }) => {
   return (
     <div styleName="root">
       <div styleName="avatar" />
-      <div styleName="text">{data.content.body}</div>
+      <div styleName="content">
+        <div styleName="text">{data.content.body}</div>
+      </div>
     </div>
   );
 };
