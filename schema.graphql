@@ -19,8 +19,33 @@ type GroupMembership {
   group: Group!
 }
 
+input JoinInput {
+  groupId: ID!
+  clientMutationId: String
+}
+
+type JoinPayload {
+  success: Boolean!
+  clientMutationId: String
+}
+
+input LeaveInput {
+  groupId: ID!
+  clientMutationId: String
+}
+
+type LeavePayload {
+  success: Boolean!
+  clientMutationId: String
+}
+
 type MessageContent {
   body: String
+}
+
+type Mutation {
+  join(input: JoinInput!): JoinPayload
+  leave(input: LeaveInput!): LeavePayload
 }
 
 input NewRoomMessageInput {
@@ -55,7 +80,13 @@ type PageInfo {
 }
 
 type Query {
+  """Fetches an object given its ID"""
+  node(
+    """The ID of an object"""
+    id: ID!
+  ): Node
   viewer(accessToken: String, userId: String): Viewer
+  user(id: ID!): User
   group(id: ID!): Group
   groups: [Group!]!
 }
@@ -96,6 +127,13 @@ type RoomMessageEdge {
 
 type Subscription {
   newRoomMessage(input: NewRoomMessageInput!): NewRoomMessagePayload
+}
+
+type User implements Node {
+  """The ID of an object"""
+  id: ID!
+  name: String!
+  ownGroups: [Group!]!
 }
 
 type Viewer {
