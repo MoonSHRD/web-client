@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql, createFragmentContainer } from 'react-relay';
+import { Link } from '@reach/router';
 import qs from 'query-string';
 import { Button } from 'antd';
 import './RoomMessage.css';
@@ -37,7 +38,12 @@ const Message = ({ data }) => {
     <div styleName="root">
       <div styleName="avatar" />
       <div styleName="content">
-        <div styleName="text">{data.content.body}</div>
+        <div styleName="text">
+          <Link to={`/user/${data.sender}`} styleName="sender">
+            {data.sender}
+          </Link>
+          {data.content.body}
+        </div>
       </div>
     </div>
   );
@@ -52,6 +58,8 @@ export default createFragmentContainer(
   graphql`
     fragment RoomMessage on RoomMessage {
       id
+      sender
+
       content {
         body
       }

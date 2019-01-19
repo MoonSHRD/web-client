@@ -7,6 +7,11 @@
   flex: 1;
 }
 
+.sender {
+  display: block;
+  font-weight: bold;
+}
+
 .text {
   display: inline-block;
   background: white;

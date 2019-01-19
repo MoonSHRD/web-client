@@ -20,6 +20,7 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Payments from './pages/Payments';
 import Community from './pages/Community';
+import User from './pages/User';
 
 const { store, persistor } = createStore();
 const relayEnvironment = createRelayEnvironment(store);
@@ -38,6 +39,7 @@ const tree = (
                 <Profile path="profile" {...context} />
                 <Payments path="payments" {...context} />
                 <Settings path="settings" {...context} />
+                <User path="user/:name" {...context} />
               </Router>
               <Location>{props => <ModalRenderer modals={modals} {...props} {...context} />}</Location>
             </RelayEnvironmentContext.Provider>

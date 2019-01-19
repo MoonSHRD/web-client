@@ -6,13 +6,18 @@ export default store => {
   function fetchQuery(operation, variables) {
     const { matrix } = store.getState();
 
+    const headers = {
+      'Content-Type': 'application/json',
+    };
+
+    if (matrix) {
+      headers['X-Access-Token'] = matrix.accessToken;
+      headers['X-User-Id'] = matrix.userId;
+    }
+
     return fetch(process.env.GRAPHQL_ENDPOINT, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Access-Token': matrix.accessToken,
-        'X-User-Id': matrix.userId,
-      },
+      headers,
       body: JSON.stringify({
         query: operation.text,
         variables,
