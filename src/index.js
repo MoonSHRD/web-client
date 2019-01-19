@@ -20,6 +20,7 @@ import Profile from './pages/Profile';
 import Settings from './pages/Settings';
 import Payments from './pages/Payments';
 import Community from './pages/Community';
+import CommunitiesList from './pages/CommunitiesList';
 import User from './pages/User';
 
 const { store, persistor } = createStore();
@@ -35,6 +36,7 @@ const tree = (
               <Router>
                 <Home path="/" {...context} />
                 <Room path="room/:id" {...context} relayEnvironment={relayEnvironment} />
+                <CommunitiesList path="communities" {...context} relayEnvironment={relayEnvironment} />
                 <Community path="community/:id" {...context} relayEnvironment={relayEnvironment} />
                 <Profile path="profile" {...context} />
                 <Payments path="payments" {...context} />
