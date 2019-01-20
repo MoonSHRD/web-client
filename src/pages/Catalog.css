@@ -1,3 +1,8 @@
+:global(.my-masonry-grid) {
+  display: flex;
+  flex-direction: row;
+}
+
 .root {
   display: flex;
   flex-direction: column;
@@ -86,8 +91,6 @@
 
 .groups {
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
   overflow-y: scroll;
   -webkit-overflow-scrolling: touch;
   height: calc(100vh - 327px);

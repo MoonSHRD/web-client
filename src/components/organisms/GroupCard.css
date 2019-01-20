@@ -2,8 +2,9 @@
   margin: 18px;
   background-color: #fff;
   flex: 1;
-  flex-basis: 282px;
   border-radius: 5px;
+  min-width: 282px;
+  max-width: 456px;
 }
 
 .header {

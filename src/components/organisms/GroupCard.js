@@ -35,6 +35,7 @@ const GroupCard = ({ title, people, desc, tags }) => (
     </div>
   </div>
 );
+
 GroupCard.propTypes = {
   title: PropTypes.string.isRequired,
   people: PropTypes.number.isRequired,

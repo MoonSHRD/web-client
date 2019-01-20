@@ -4,6 +4,7 @@ import { Icon, Select } from 'antd';
 import Search from 'components/molecules/Search';
 import Tag from 'components/atoms/Tag';
 import GroupCard from 'components/organisms/GroupCard';
+import Masonry from 'react-masonry-css';
 import './Catalog.css';
 
 const { Option } = Select;
@@ -314,6 +315,12 @@ const groups = [
   },
 ];
 
+const breakpointColumnsObj = {};
+
+new Array(250).fill('').forEach((_, i) => {
+  breakpointColumnsObj[408 * (i + 1)] = i + 1;
+});
+
 const Catalog = () => (
   <div styleName="root">
     <div styleName="header">
@@ -350,17 +357,11 @@ const Catalog = () => (
       </div>
     </div>
     <div styleName="groups">
-      {groups.map(g => (
-        <GroupCard title={g.title} people={g.people} desc={g.description} tags={g.tags} />
-      ))}
-      <div styleName="rest-groups" />
-      <div styleName="rest-groups" />
-      <div styleName="rest-groups" />
-      <div styleName="rest-groups" />
-      <div styleName="rest-groups" />
-      <div styleName="rest-groups" />
-      <div styleName="rest-groups" />
-      <div styleName="rest-groups" />
+      <Masonry breakpointCols={breakpointColumnsObj}>
+        {groups.map(g => (
+          <GroupCard title={g.title} people={g.people} desc={g.description} tags={g.tags} />
+        ))}
+      </Masonry>
     </div>
   </div>
 );
