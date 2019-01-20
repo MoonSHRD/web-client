@@ -14,7 +14,7 @@ export default (query, config = {}) => Component => wrapperProps => {
   // TODO: something wrong with lookup prop @alexesdev check please
   return (
     <QueryLookupRenderer
-      lookup={false}
+      lookup
       query={query}
       variables={variables}
       environment={environment}
