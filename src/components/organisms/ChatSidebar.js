@@ -20,7 +20,9 @@ const Sidebar = ({ className, viewer, ...props }) => {
 
   return (
     <div styleName="root" className={className} {...props}>
-      <Search />
+      <Search type="dark">
+        <Button shape="circle" icon="plus" />
+      </Search>
       <Collapse defaultActiveKey={groupMembership.map(gm => gm.group.id)} key={groupMembership.length}>
         {groupMembership.map(({ group }) => (
           <Collapse.Panel header={getHeader(group)} key={group.id}>

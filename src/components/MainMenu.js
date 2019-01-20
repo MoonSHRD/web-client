@@ -16,7 +16,7 @@ const links = [
     icon: 'user',
   },
   {
-    to: '/communities',
+    to: '/catalog',
     icon: 'ordered-list',
   },
   {

@@ -12,13 +12,25 @@
   color: #dddfe7;
 }
 
+.light {
+  color: #a3a3a3;
+}
+
+.dark {
+  color: #dddfe7;
+}
+
+.light-input::placeholder {
+  color: #a3a3a3;
+}
+
+.dark-input::placeholder {
+  color: #dddfe7;
+}
+
 .input {
   flex: 1;
   background: transparent;
   border: 0;
   padding: 0 5px;
-}
-
-.input::placeholder {
-  color: #dddfe7;
 }

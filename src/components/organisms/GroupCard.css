@@ -1,0 +1,64 @@
+.root {
+  margin: 18px;
+  background-color: #fff;
+  flex: 1;
+  border-radius: 5px;
+  min-width: 282px;
+  max-width: 456px;
+}
+
+.header {
+  padding: 22px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: solid #efefef 1px;
+}
+
+.group-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.group-data {
+  margin-left: 16px;
+}
+
+.viewers {
+  display: flex;
+}
+
+.viewer-icon {
+  display: flex;
+  align-items: center;
+  margin-right: 6px;
+}
+
+.more-icon {
+  cursor: pointer;
+  font-size: 24px;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.footer {
+  padding: 22px;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 85px;
+  margin-top: 22px;
+}
+
+.button {
+  padding: 13px 40px;
+  height: unset;
+  line-height: 12px;
+}
