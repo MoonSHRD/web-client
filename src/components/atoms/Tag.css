@@ -1,0 +1,17 @@
+.tag {
+  padding: 6px;
+  font-size: 12px;
+  margin: 2px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.active {
+  background-color: #434e78;
+  color: #fff;
+}
+
+.disabled {
+  background-color: #efefef;
+  color: #363636;
+}
