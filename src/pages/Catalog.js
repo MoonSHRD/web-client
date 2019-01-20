@@ -336,24 +336,24 @@ const Catalog = () => (
       </Search>
     </div>
     <div styleName="tags">
-      <div styleName="tags__header">
-        <div styleName="header__title">
+      <div styleName="tags-header">
+        <div styleName="header-title">
           <Icon type="tags" styleName="title-tag" />
           <p>Выберите рубрику по интересам</p>
         </div>
-        <div styleName="header__hide">
+        <div styleName="header-hide">
           <span>Cкрыть</span>
-          <Icon type="plus" styleName="hide__icon" />
+          <Icon type="plus" styleName="hide-icon" />
         </div>
       </div>
-      <div styleName="tags__list">
+      <div styleName="tags-list">
         {tags.map(tag => (
           <Tag label={tag.label} selected={tag.selected} />
         ))}
       </div>
-      <div styleName="tags__more">
+      <div styleName="tags-more">
         <span>Показать больше</span>
-        <Icon type="down" styleName="more__icon" />
+        <Icon type="down" styleName="more-icon" />
       </div>
     </div>
     <div styleName="groups">

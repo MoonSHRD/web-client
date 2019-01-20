@@ -25,7 +25,7 @@
   background-color: #fff;
 }
 
-.tags__header {
+.tags-header {
   color: #a3a3a3;
   width: 100%;
   display: flex;
@@ -33,23 +33,23 @@
   justify-content: space-between;
 }
 
-.header__title,
-.header__hide {
+.header-title,
+.header-hide {
   display: flex;
 }
 
-.header__hide {
+.header-hide {
   color: #000;
   font-size: 14px;
   cursor: pointer;
 }
 
-.hide__icon {
+.hide-icon {
   font-size: 15px;
   transform: rotate(45deg) translate(20%, 0%);
 }
 
-.tags__more {
+.tags-more {
   display: flex;
   color: #a3a3a3;
   flex-direction: row;
@@ -58,7 +58,7 @@
   cursor: pointer;
 }
 
-.more__icon {
+.more-icon {
   margin-left: 13px;
   font-size: 15px;
   align-items: center;
@@ -70,7 +70,7 @@
   margin-right: 14px;
 }
 
-.tags__list {
+.tags-list {
   max-width: 900px;
   display: flex;
   align-items: center;
