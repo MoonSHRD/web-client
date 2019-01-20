@@ -16,7 +16,7 @@ const getHeader = data => (
 );
 
 const Sidebar = ({ className, viewer, ...props }) => {
-  const { groupMembership } = viewer;
+  const { groupMembership = [] } = viewer || {};
 
   return (
     <div styleName="root" className={className} {...props}>
@@ -44,11 +44,12 @@ const Sidebar = ({ className, viewer, ...props }) => {
 
 Sidebar.propTypes = {
   className: PropTypes.string,
-  viewer: PropTypes.object.isRequired,
+  viewer: PropTypes.object,
 };
 
 Sidebar.defaultProps = {
   className: undefined,
+  viewer: {},
 };
 
 const query = graphql`
