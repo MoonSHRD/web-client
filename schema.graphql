@@ -10,6 +10,8 @@ type Group implements Node {
 }
 
 type GroupMembership {
+  """The ID of an object"""
+  id: ID!
   groupId: String!
   userId: String!
   isAdmin: Boolean!
