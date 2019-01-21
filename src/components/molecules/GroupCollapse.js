@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { Avatar, Icon, Button } from 'antd';
+import { Link } from '@reach/router';
 import ModalLink from 'components/atoms/ModalLink';
 import Room from 'components/atoms/Room';
 import './GroupCollapse.css';
@@ -10,10 +11,14 @@ const GroupCollapse = ({ opened, header, group, selectedRoom, onClick }) => (
     {/* eslint-disable-next-line */}
     <div onClick={onClick} role="button" styleName={`header ${opened ? 'opened' : ''}`}>
       <div styleName="headerLeft">
-        <Avatar size={48} icon="user" />
+        <Avatar size={48} icon="user" src={group.avatarUrl} />
         <div styleName="info">
           <span styleName="groupName">{header}</span>
-          <span styleName="groupDesc">Description.</span>
+          <span styleName="groupDesc">
+            <Link to={`/group/${group.id}/settings`} style={{ color: '#aaa' }}>
+              Настройки
+            </Link>
+          </span>
         </div>
       </div>
       <div styleName="headerRight">

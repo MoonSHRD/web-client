@@ -23,6 +23,7 @@ import Community from './pages/Community';
 import CommunitiesList from './pages/CommunitiesList';
 import User from './pages/User';
 import Catalog from './pages/Catalog';
+import GroupSettings from './pages/GroupSettings';
 
 const { store, persistor } = createStore();
 const relayEnvironment = createRelayEnvironment(store);
@@ -36,6 +37,7 @@ const tree = (
             <RelayEnvironmentContext.Provider value={relayEnvironment}>
               <Router>
                 <Home path="/" {...context} />
+                <GroupSettings path="group/:id/settings" {...context} relayEnvironment={relayEnvironment} />
                 <Room path="room/:id" {...context} relayEnvironment={relayEnvironment} />
                 <CommunitiesList path="communities" {...context} relayEnvironment={relayEnvironment} />
                 <Community path="community/:id" {...context} relayEnvironment={relayEnvironment} />

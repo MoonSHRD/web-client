@@ -10,7 +10,6 @@ type Group implements Node {
 }
 
 type GroupMembership {
-  """The ID of an object"""
   id: ID!
   groupId: String!
   userId: String!
@@ -48,6 +47,7 @@ type MessageContent {
 type Mutation {
   join(input: JoinInput!): JoinPayload
   leave(input: LeaveInput!): LeavePayload
+  uploadGroupAvatar(input: UploadGroupAvatarInput!): UploadGroupAvatarPayload
 }
 
 input NewRoomMessageInput {
@@ -129,6 +129,19 @@ type RoomMessageEdge {
 
 type Subscription {
   newRoomMessage(input: NewRoomMessageInput!): NewRoomMessagePayload
+}
+
+input UploadGroupAvatarInput {
+  groupId: String!
+  ext: String!
+  clientMutationId: String
+}
+
+type UploadGroupAvatarPayload {
+  postURL: String!
+  formData: String!
+  group: Group!
+  clientMutationId: String
 }
 
 type User implements Node {

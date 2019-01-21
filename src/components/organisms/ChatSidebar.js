@@ -56,7 +56,6 @@ Sidebar.propTypes = {
 
 Sidebar.defaultProps = {
   className: undefined,
-  viewer: {},
 };
 
 const query = graphql`
@@ -66,6 +65,7 @@ const query = graphql`
         group {
           id
           name
+          avatarUrl
 
           rooms {
             id
