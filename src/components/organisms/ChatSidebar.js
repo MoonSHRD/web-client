@@ -1,11 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
-import { Button, Collapse } from 'antd';
 import { graphql } from 'react-relay';
-import Search from 'components/molecules/Search';
-import ModalLink from 'components/atoms/ModalLink';
 import withQueryRenderer from 'hocs/withQueryRenderer';
+import Search from 'components/molecules/Search';
+import Tabs from 'components/molecules/Tabs';
+import GroupCollapse from 'components/molecules/GroupCollapse';
 import './ChatSidebar.css';
 
 const getHeader = data => (
@@ -15,29 +15,36 @@ const getHeader = data => (
   </div>
 );
 
-const Sidebar = ({ className, viewer, ...props }) => {
+const Sidebar = ({ className, viewer, selectedRoom, ...props }) => {
   const { groupMembership } = viewer;
+
+  const [opened, open] = useState(-1);
+
+  const handleOpen = index => {
+    if (index === opened) {
+      return open(-1);
+    }
+    return open(index);
+  };
 
   return (
     <div styleName="root" className={className} {...props}>
       <Search type="dark">
-        <Button shape="circle" icon="plus" />
+        <button type="button" styleName="plusButton">
+          <span>+</span>
+        </button>
       </Search>
-      <Collapse defaultActiveKey={groupMembership.map(gm => gm.group.id)} key={groupMembership.length}>
-        {groupMembership.map(({ group }) => (
-          <Collapse.Panel header={getHeader(group)} key={group.id}>
-            {group.rooms.map(room => (
-              <div key={room.id}>
-                <Link to={`/room/${room.id}`}>{room.name}</Link>
-              </div>
-            ))}
-            {group.rooms.length === 0 && <div>Rooms not found</div>}
-            <ModalLink component={Button} to="createRoom" params={{ groupId: group.id }} size="small">
-              Create Room
-            </ModalLink>
-          </Collapse.Panel>
-        ))}
-      </Collapse>
+      <Tabs />
+      {groupMembership.map(({ group }, index) => (
+        <GroupCollapse
+          onClick={() => handleOpen(index)}
+          opened={index === opened}
+          header={getHeader(group)}
+          key={group.id}
+          selectedRoom={selectedRoom}
+          group={group}
+        />
+      ))}
     </div>
   );
 };
@@ -45,6 +52,7 @@ const Sidebar = ({ className, viewer, ...props }) => {
 Sidebar.propTypes = {
   className: PropTypes.string,
   viewer: PropTypes.object.isRequired,
+  selectedRoom: PropTypes.string.isRequired,
 };
 
 Sidebar.defaultProps = {

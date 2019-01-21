@@ -1,0 +1,69 @@
+.root {
+}
+
+.header.opened {
+  background-color: #5c6a9f;
+}
+
+.header.opened .headerRight {
+  color: #8d97bc;
+}
+
+.header {
+  background-color: #4d5884;
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.headerLeft {
+  display: flex;
+}
+
+.info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 16px;
+}
+
+.groupName {
+  color: #fff;
+  font-size: 16px;
+}
+
+.groupName,
+.groupDesc {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  width: 140px;
+}
+
+.rooms {
+  padding: 24px 52px;
+  background: #535e8e;
+}
+
+.rooms * {
+  color: #b4bbd8;
+}
+
+.room.selected {
+  color: #fff;
+}
+
+.groupDesc {
+  color: #b3bad8;
+  font-size: 14px;
+}
+
+.headerRight {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 48px;
+  width: 45px;
+  font-size: 16px;
+  color: #838aa9;
+}

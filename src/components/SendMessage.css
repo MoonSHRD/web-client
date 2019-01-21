@@ -3,15 +3,58 @@
   padding: 0 20px;
 }
 
-.message {
-  flex: 1;
+.wrapper {
+  padding: 32px;
+  background-color: #fff;
+  box-shadow: 0 0px 7px 0px rgba(0, 0, 0, 0.1);
+}
+.paperClip,
+.sound,
+.smile,
+.mail {
+  color: #c5c5c5;
+  cursor: pointer;
+  font-size: 23px;
+  vertical-align: -0.3em;
 }
 
-.message input,
-.message :global(.ant-form-item-control-wrapper) {
-  width: 100%;
+.smile {
+  font-size: 20px;
 }
 
-.submit {
-  flex: 0;
+.messageInput {
+  width: calc(100% - 150px);
+  border: 0;
+  outline: 0;
+  margin-bottom: 3px;
+}
+
+.messageInput::placeholder {
+  color: #a3a3a3;
+}
+
+.paperClip {
+  padding-right: 20px;
+}
+
+.sound,
+.smile {
+  padding-right: 18px;
+}
+
+.mailButton {
+  border: none;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+  margin-left: 5px;
 }
