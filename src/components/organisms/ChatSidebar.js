@@ -16,8 +16,7 @@ const getHeader = data => (
 );
 
 const Sidebar = ({ className, viewer, selectedRoom, ...props }) => {
-  const { groupMembership } = viewer;
-
+  const { groupMembership = [] } = viewer;
   const [opened, open] = useState(-1);
 
   const handleOpen = index => {
@@ -57,6 +56,7 @@ Sidebar.propTypes = {
 
 Sidebar.defaultProps = {
   className: undefined,
+  viewer: {},
 };
 
 const query = graphql`

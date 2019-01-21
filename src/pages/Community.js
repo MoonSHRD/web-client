@@ -1,7 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { graphql } from 'react-relay';
+
+import withQueryRenderer from 'hocs/withQueryRenderer';
 import Chat from 'components/templates/Chat';
-import { graphql, QueryRenderer } from 'react-relay';
+
+const Community = ({ group, viewer }) => {
+  const { groupMembership = [] } = viewer || {};
+
+  return (
+    <Chat matrixRooms={{}}>
+      zaluuupa
+      {JSON.stringify(group)}
+      {JSON.stringify(groupMembership)}
+    </Chat>
+  );
+};
 
 const query = graphql`
   query CommunityQuery($id: ID!) {
@@ -12,44 +26,30 @@ const query = graphql`
       longDescription
       isPublic
     }
+
+    viewer {
+      groupMembership(isAdmin: true) {
+        groupId
+        isAdmin
+      }
+    }
   }
 `;
 
-const Community = ({ relayEnvironment, id }) => (
-  <Chat matrixRooms={{}}>
-    <QueryRenderer
-      environment={relayEnvironment}
-      query={query}
-      variables={{ id }}
-      render={({ props, error }) => {
-        if (error) {
-          return <div>Error: {error.toString()}</div>;
-        }
-
-        if (!props) {
-          return <div>Loading...</div>;
-        }
-
-        // eslint-disable-next-line react/prop-types
-        const { group } = props;
-
-        if (!group) {
-          return <div>Community not found</div>;
-        }
-
-        return <pre>{JSON.stringify(group)}</pre>;
-      }}
-    />
-  </Chat>
-);
+const enhance = withQueryRenderer(query, {
+  getVariables: props => ({
+    id: props.id,
+  }),
+});
 
 Community.propTypes = {
-  relayEnvironment: PropTypes.object.isRequired,
-  id: PropTypes.string,
+  group: PropTypes.object,
+  viewer: PropTypes.object,
 };
 
 Community.defaultProps = {
-  id: null,
+  group: {},
+  viewer: {},
 };
 
-export default Community;
+export default enhance(Community);

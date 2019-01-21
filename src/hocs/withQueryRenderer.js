@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import QueryLookupRenderer from 'relay-query-lookup-renderer';
+
 import RelayEnvironmentContext from 'components/RelayEnvironmentContext';
 import QueryRendererError from 'components/molecules/QueryRendererError';
 import Loading from 'components/molecules/Loading';
@@ -10,6 +11,7 @@ export default (query, config = {}) => Component => wrapperProps => {
   const { getVariables, ...queryProps } = config;
   const variables = getVariables ? getVariables(wrapperProps) : config.variables;
 
+  // TODO: something wrong with lookup prop @alexesdev check please
   return (
     <QueryLookupRenderer
       lookup
