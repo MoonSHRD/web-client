@@ -318,7 +318,7 @@ const groups = [
 const breakpointColumnsObj = {};
 
 new Array(250).fill('').forEach((_, i) => {
-  breakpointColumnsObj[408 * (i + 1)] = i + 1;
+  breakpointColumnsObj[531 * (i + 1)] = i + 1;
 });
 
 const Catalog = () => (
