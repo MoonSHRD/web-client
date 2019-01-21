@@ -2,3 +2,29 @@
   width: 320px;
   background: #4d5884;
 }
+
+.plusButton {
+  background-color: #5c6a9f;
+  color: #fff;
+  height: 34px;
+  width: 34px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 22px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border: none;
+  outline: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+
+.plusButton span {
+  height: 34px;
+}

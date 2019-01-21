@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Input, Button } from 'antd';
-import { hasErrors, makeHandleSubmit } from '../utils/form';
+import { Form, Icon } from 'antd';
+import { makeHandleSubmit } from '../utils/form';
 import './SendMessage.css';
 
 const SendMessage = ({ className, matrixClient, form, roomId }) => {
@@ -20,18 +20,29 @@ const SendMessage = ({ className, matrixClient, form, roomId }) => {
   });
 
   return (
-    <Form layout="inline" onSubmit={handleSubmit} className={className} styleName="root">
-      <Form.Item styleName="message">
-        {form.getFieldDecorator('message', { rules: [{ required: true, message: 'Please input your message!' }] })(
-          <Input placeholder="Message" autoFocus autoComplete="off" />
-        )}
-      </Form.Item>
-      <Form.Item styleName="submit">
-        <Button type="primary" htmlType="submit" disabled={hasErrors(form.getFieldsError())}>
-          Send
-        </Button>
-      </Form.Item>
-    </Form>
+    <form onSubmit={handleSubmit} className={className}>
+      {/* eslint-disable-next-line jsx-a11y/label-has-for */}
+      <label htmlFor="chat-input">
+        <div styleName="wrapper">
+          <Icon type="paper-clip" styleName="paperClip" />
+          {/* eslint-disable jsx-a11y/no-autofocus */}
+          {form.getFieldDecorator('message', { rules: [{ required: true, message: 'Please input your message!' }] })(
+            <input
+              placeholder="Новое сообщение"
+              id="chat-input"
+              autoFocus
+              autoComplete="off"
+              styleName="messageInput"
+            />
+          )}
+          <Icon type="sound" styleName="sound" />
+          <Icon type="smile" styleName="smile" />
+          <button type="submit" styleName="mailButton">
+            <Icon type="mail" styleName="mail" />
+          </button>
+        </div>
+      </label>
+    </form>
   );
 };
 

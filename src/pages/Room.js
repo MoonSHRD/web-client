@@ -77,7 +77,7 @@ const Room = ({ id, matrixClient }) => {
   );
 
   return (
-    <Chat>
+    <Chat selectedRoom={id}>
       <QueryLookupRenderer
         lookup
         environment={relayEnvironment}
