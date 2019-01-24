@@ -1,42 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { compose } from 'redux';
+import { graphql } from 'react-relay';
+import withMutation from 'hocs/withMutation';
 import { Modal, Form, Button, Input } from 'antd';
-import { hasErrors, makeHandleSubmit } from '../utils/form';
+import { hasErrors, makeHandleSubmit, getFieldErrors } from '../utils/form';
 
-const CreateRoomModal = ({ groupId, matrixClient, onClose, navigate, form }) => {
+const CreateRoomModal = ({ save, onClose, form }) => {
   const handleSubmit = makeHandleSubmit(form, async (formError, values) => {
     if (formError) {
       return;
     }
 
-    const options = {
-      name: values.name,
-      preset: 'private_chat',
-      visibility: 'private',
-      initial_state: [
-        {
-          content: {
-            guest_access: 'can_join',
-          },
-          type: 'm.room.guest_access',
-          state_key: '',
-        },
-      ],
-    };
-
-    try {
-      const { room_id: roomId } = await matrixClient.createRoom(options);
-      await matrixClient.addRoomToGroup(groupId, roomId, true);
-
-      navigate(`/room/${roomId}`);
-    } catch (createError) {
-      form.setFields({
-        name: {
-          value: values.localpart,
-          errors: [createError],
-        },
-      });
-    }
+    save(values);
   });
 
   return (
@@ -57,12 +33,47 @@ const CreateRoomModal = ({ groupId, matrixClient, onClose, navigate, form }) => 
 
 CreateRoomModal.propTypes = {
   onClose: PropTypes.func.isRequired,
-  navigate: PropTypes.func.isRequired,
+  save: PropTypes.func.isRequired,
   form: PropTypes.object.isRequired,
-  matrixClient: PropTypes.object.isRequired,
-  groupId: PropTypes.string.isRequired,
 };
 
-const enhance = Form.create();
+const mutation = graphql`
+  mutation CreateRoomModalMutation($input: CreateRoomInput!) {
+    createRoom(input: $input) {
+      edge {
+        node {
+          id
+          name
+        }
+      }
+
+      errors {
+        common
+        name
+      }
+    }
+  }
+`;
+
+const enhance = compose(
+  Form.create(),
+  withMutation('save', (props, values) => ({
+    mutation,
+    variables: {
+      input: {
+        ...values,
+        communityId: props.communityId,
+      },
+    },
+    onCompleted: ({ createRoom }) => {
+      if (createRoom.errors) {
+        props.form.setFields(getFieldErrors(props.form, values, createRoom.errors));
+        return;
+      }
+
+      props.navigate(`/room/${createRoom.edge.node.id}`);
+    },
+  }))
+);
 
 export default enhance(CreateRoomModal);

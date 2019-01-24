@@ -36,7 +36,7 @@ const GroupCollapse = ({ opened, header, data, selectedRoom, onClick }) => (
           )}
         </div>
         {data.rooms.edges.length === 0 && <div>Rooms not found</div>}
-        <ModalLink component={Button} to="createRoom" params={{ communityId: data.rowId }} size="small">
+        <ModalLink component={Button} to="createRoom" params={{ communityId: data.id }} size="small">
           Create Room
         </ModalLink>
       </Fragment>
@@ -61,12 +61,13 @@ export default createFragmentContainer(
   GroupCollapse,
   graphql`
     fragment GroupCollapse on Community {
+      id
       rowId
       avatarUrl
       name
 
       rooms {
-        edges(first: 99) {
+        edges {
           node {
             id
             name
