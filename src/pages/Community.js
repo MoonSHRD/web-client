@@ -5,26 +5,26 @@ import { graphql } from 'react-relay';
 import withQueryRenderer from 'hocs/withQueryRenderer';
 import Chat from 'components/templates/Chat';
 
-const Community = ({ group, viewer }) => {
-  const { groupMembership = [] } = viewer || {};
+const Community = ({ community, viewer }) => {
+  if (!community || !viewer) {
+    return <div>Not found</div>;
+  }
 
   return (
-    <Chat matrixRooms={{}}>
-      zaluuupa
-      {JSON.stringify(group)}
-      {JSON.stringify(groupMembership)}
+    <Chat>
+      <h2>{community.name}</h2>
+      {JSON.stringify(community)}
+      {JSON.stringify(viewer.groupMembership)}
     </Chat>
   );
 };
 
 const query = graphql`
-  query CommunityQuery($id: ID!) {
-    group(id: $id) {
+  query CommunityQuery($id: Int!) {
+    community(rowId: $id) {
       id
       name
       shortDescription
-      longDescription
-      isPublic
     }
 
     viewer {
@@ -43,13 +43,13 @@ const enhance = withQueryRenderer(query, {
 });
 
 Community.propTypes = {
-  group: PropTypes.object,
+  community: PropTypes.object,
   viewer: PropTypes.object,
 };
 
 Community.defaultProps = {
-  group: {},
-  viewer: {},
+  community: null,
+  viewer: null,
 };
 
 export default enhance(Community);
