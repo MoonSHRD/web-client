@@ -1,3 +1,69 @@
+type Community {
+  """The ID of an object"""
+  id: ID!
+  rowId: Int!
+  ownerId: ID!
+  name: String!
+  shortDescription: String!
+  avatarUrl: String
+  userCount: Int!
+  roomIds: [ID!]!
+  tags: [ID!]!
+  generalRoomId: ID!
+}
+
+"""A connection to a list of items."""
+type CommunityConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommunityEdge]
+}
+
+"""An edge in a connection."""
+type CommunityEdge {
+  """The item at the end of the edge"""
+  node: Community
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type CreateCommunity {
+  common: String
+  name: String
+}
+
+input CreateCommunityInput {
+  name: String!
+  tags: [ID!]!
+  clientMutationId: String
+}
+
+type CreateCommunityPayload {
+  edge: MonsterCommunityEdge
+  errors: CreateCommunity
+  clientMutationId: String
+}
+
+type CreateRoom {
+  common: String
+  name: String
+}
+
+input CreateRoomInput {
+  communityId: ID!
+  name: String!
+  clientMutationId: String
+}
+
+type CreateRoomPayload {
+  edge: MonsterRoomEdge
+  errors: CreateRoom
+  clientMutationId: String
+}
+
 type Group implements Node {
   id: ID!
   name: String
@@ -44,10 +110,30 @@ type MessageContent {
   body: String
 }
 
+"""An edge in a connection."""
+type MonsterCommunityEdge {
+  """The item at the end of the edge"""
+  node: Community
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""An edge in a connection."""
+type MonsterRoomEdge {
+  """The item at the end of the edge"""
+  node: Room
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 type Mutation {
   join(input: JoinInput!): JoinPayload
   leave(input: LeaveInput!): LeavePayload
   uploadGroupAvatar(input: UploadGroupAvatarInput!): UploadGroupAvatarPayload
+  createCommunity(input: CreateCommunityInput!): CreateCommunityPayload
+  createRoom(input: CreateRoomInput!): CreateRoomPayload
 }
 
 input NewRoomMessageInput {
@@ -91,6 +177,7 @@ type Query {
   user(id: ID!): User
   group(id: ID!): Group
   groups: [Group!]!
+  communities(after: String, first: Int, search: String): CommunityConnection
 }
 
 type Room implements Node {

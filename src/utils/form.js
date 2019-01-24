@@ -12,3 +12,18 @@ export const makeHandleSubmit = (form, fn) => event => {
     }
   });
 };
+
+export const getFieldErrors = (form, values, errors) => {
+  const fields = {};
+
+  Object.keys(errors).forEach(k => {
+    if (errors[k]) {
+      fields[k] = {
+        value: values[k],
+        errors: [new Error(errors[k])],
+      };
+    }
+  });
+
+  return fields;
+};

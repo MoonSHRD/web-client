@@ -6,6 +6,7 @@ import withQueryRenderer from 'hocs/withQueryRenderer';
 import Search from 'components/molecules/Search';
 import Tabs from 'components/molecules/Tabs';
 import GroupCollapse from 'components/molecules/GroupCollapse';
+import ModalLink from 'components/atoms/ModalLink';
 import './ChatSidebar.css';
 
 const getHeader = data => (
@@ -29,9 +30,9 @@ const Sidebar = ({ className, viewer, selectedRoom, ...props }) => {
   return (
     <div styleName="root" className={className} {...props}>
       <Search type="dark">
-        <button type="button" styleName="plusButton">
+        <ModalLink component="button" type="button" styleName="plusButton" to="createCommunity">
           <span>+</span>
-        </button>
+        </ModalLink>
       </Search>
       <Tabs />
       {groupMembership.map(({ group }, index) => (
