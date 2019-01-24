@@ -10,6 +10,7 @@ type Community {
   roomIds: [ID!]!
   tags: [ID!]!
   generalRoomId: ID!
+  rooms(after: String, first: Int, before: String, last: Int): RoomConnection
 }
 
 """A connection to a list of items."""
@@ -187,6 +188,24 @@ type Room implements Node {
   creator: String
   name: String
   messages(after: String, first: Int, before: String, last: Int): RoomMessageConnection
+}
+
+"""A connection to a list of items."""
+type RoomConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [RoomEdge]
+}
+
+"""An edge in a connection."""
+type RoomEdge {
+  """The item at the end of the edge"""
+  node: Room
+
+  """A cursor for use in pagination"""
+  cursor: String!
 }
 
 type RoomMessage {

@@ -12,12 +12,11 @@ import './ChatSidebar.css';
 const getHeader = data => (
   <div>
     {data.name}
-    <Link to={`/community/${data.id}`}>View</Link>
+    <Link to={`/community/${data.rowId}`}>View</Link>
   </div>
 );
 
-const Sidebar = ({ className, viewer, selectedRoom, ...props }) => {
-  const { groupMembership = [] } = viewer;
+const Sidebar = ({ className, communities, selectedRoom, ...props }) => {
   const [opened, open] = useState(-1);
 
   const handleOpen = index => {
@@ -35,14 +34,14 @@ const Sidebar = ({ className, viewer, selectedRoom, ...props }) => {
         </ModalLink>
       </Search>
       <Tabs />
-      {groupMembership.map(({ group }, index) => (
+      {communities.edges.map((edge, index) => (
         <GroupCollapse
           onClick={() => handleOpen(index)}
           opened={index === opened}
-          header={getHeader(group)}
-          key={group.id}
+          header={getHeader(edge.node)}
+          key={edge.node.id}
           selectedRoom={selectedRoom}
-          group={group}
+          data={edge.node}
         />
       ))}
     </div>
@@ -51,8 +50,8 @@ const Sidebar = ({ className, viewer, selectedRoom, ...props }) => {
 
 Sidebar.propTypes = {
   className: PropTypes.string,
-  viewer: PropTypes.object.isRequired,
   selectedRoom: PropTypes.string.isRequired,
+  communities: PropTypes.object.isRequired,
 };
 
 Sidebar.defaultProps = {
@@ -61,17 +60,13 @@ Sidebar.defaultProps = {
 
 const query = graphql`
   query ChatSidebarQuery {
-    viewer {
-      groupMembership {
-        group {
+    communities {
+      edges {
+        node {
           id
+          rowId
           name
-          avatarUrl
-
-          rooms {
-            id
-            name
-          }
+          ...GroupCollapse
         }
       }
     }

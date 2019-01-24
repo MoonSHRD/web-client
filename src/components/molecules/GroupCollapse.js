@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import { graphql, createFragmentContainer } from 'react-relay';
 import PropTypes from 'prop-types';
 import { Avatar, Icon, Button } from 'antd';
 import { Link } from '@reach/router';
@@ -6,16 +7,16 @@ import ModalLink from 'components/atoms/ModalLink';
 import Room from 'components/atoms/Room';
 import './GroupCollapse.css';
 
-const GroupCollapse = ({ opened, header, group, selectedRoom, onClick }) => (
+const GroupCollapse = ({ opened, header, data, selectedRoom, onClick }) => (
   <div styleName="root">
     {/* eslint-disable-next-line */}
     <div onClick={onClick} role="button" styleName={`header ${opened ? 'opened' : ''}`}>
       <div styleName="headerLeft">
-        <Avatar size={48} icon="user" src={group.avatarUrl} />
+        <Avatar size={48} icon="user" src={data.avatarUrl} />
         <div styleName="info">
           <span styleName="groupName">{header}</span>
           <span styleName="groupDesc">
-            <Link to={`/group/${group.id}/settings`} style={{ color: '#aaa' }}>
+            <Link to={`/community/${data.rowId}/settings`} style={{ color: '#aaa' }}>
               Настройки
             </Link>
           </span>
@@ -29,12 +30,13 @@ const GroupCollapse = ({ opened, header, group, selectedRoom, onClick }) => (
     {opened && (
       <Fragment>
         <div styleName="rooms">
-          {group.rooms.map(room => (
-            <Room room={room} key={room.id} selectedRoom={selectedRoom} />
-          ))}
+          {data.rooms.edges.map(
+            roomEdge =>
+              roomEdge.node && <Room room={roomEdge.node} key={roomEdge.node.id} selectedRoom={selectedRoom} />
+          )}
         </div>
-        {group.rooms.length === 0 && <div>Rooms not found</div>}
-        <ModalLink component={Button} to="createRoom" params={{ groupId: group.id }} size="small">
+        {data.rooms.edges.length === 0 && <div>Rooms not found</div>}
+        <ModalLink component={Button} to="createRoom" params={{ communityId: data.rowId }} size="small">
           Create Room
         </ModalLink>
       </Fragment>
@@ -46,7 +48,7 @@ GroupCollapse.propTypes = {
   opened: PropTypes.bool,
   header: PropTypes.any,
   selectedRoom: PropTypes.string.isRequired,
-  group: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
@@ -55,4 +57,22 @@ GroupCollapse.defaultProps = {
   header: undefined,
 };
 
-export default GroupCollapse;
+export default createFragmentContainer(
+  GroupCollapse,
+  graphql`
+    fragment GroupCollapse on Community {
+      rowId
+      avatarUrl
+      name
+
+      rooms {
+        edges(first: 99) {
+          node {
+            id
+            name
+          }
+        }
+      }
+    }
+  `
+);
