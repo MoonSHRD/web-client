@@ -10,7 +10,7 @@ const GroupCard = ({ title, people, desc, tags }) => (
       <div styleName="group-info">
         <Avatar size={48} icon="user" />
         <div styleName="group-data">
-          <span>{title}</span>
+          <span styleName="title">{title}</span>
           <div styleName="viewers">
             <Icon type="user" styleName="viewer-icon" />
             <span>{people}</span>

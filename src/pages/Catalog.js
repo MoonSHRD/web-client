@@ -11,123 +11,67 @@ const { Option } = Select;
 
 const tags = [
   {
-    label: 'javscript',
+    label: 'galaxy',
     selected: false,
   },
   {
-    label: 'golang',
+    label: 'space',
     selected: true,
   },
   {
-    label: 'github',
+    label: 'nasa',
     selected: false,
   },
   {
-    label: 'javscript',
+    label: 'space',
     selected: false,
   },
   {
-    label: 'golang',
+    label: 'discovery',
     selected: true,
   },
   {
-    label: 'github',
+    label: 'world',
     selected: false,
   },
   {
-    label: 'javscript',
+    label: 'млечныйпуть',
     selected: false,
   },
   {
-    label: 'golang',
+    label: 'космос',
+    selected: false,
+  },
+  {
+    label: 'планета',
+    selected: false,
+  },
+  {
+    label: 'вселенная',
+    selected: false,
+  },
+  {
+    label: 'нло',
+    selected: false,
+  },
+  {
+    label: 'ufo',
+    selected: false,
+  },
+  {
+    label: 'наса',
+    selected: false,
+  },
+  {
+    label: 'марс',
     selected: true,
   },
   {
-    label: 'github',
+    label: 'космическаяпрограмма',
     selected: false,
   },
   {
-    label: 'javscript',
-    selected: false,
-  },
-  {
-    label: 'golang',
-    selected: true,
-  },
-  {
-    label: 'github',
-    selected: false,
-  },
-  {
-    label: 'javscript',
-    selected: false,
-  },
-  {
-    label: 'golang',
-    selected: true,
-  },
-  {
-    label: 'github',
-    selected: false,
-  },
-  {
-    label: 'javscript',
-    selected: false,
-  },
-  {
-    label: 'golang',
-    selected: true,
-  },
-  {
-    label: 'github',
-    selected: false,
-  },
-  {
-    label: 'javscript',
-    selected: false,
-  },
-  {
-    label: 'golang',
-    selected: true,
-  },
-  {
-    label: 'github',
-    selected: false,
-  },
-  {
-    label: 'javscript',
-    selected: false,
-  },
-  {
-    label: 'golang',
-    selected: true,
-  },
-  {
-    label: 'github',
-    selected: false,
-  },
-  {
-    label: 'javscript',
-    selected: false,
-  },
-  {
-    label: 'golang',
-    selected: true,
-  },
-  {
-    label: 'github',
-    selected: false,
-  },
-  {
-    label: 'javscript',
-    selected: false,
-  },
-  {
-    label: 'golang',
-    selected: true,
-  },
-  {
-    label: 'github',
+    label: 'чернаядыра',
     selected: false,
   },
 ];
@@ -324,9 +268,9 @@ new Array(250).fill('').forEach((_, i) => {
 const Catalog = () => (
   <div styleName="root">
     <div styleName="header">
-      <Search placeholder="Поиск по названию сообщества или описанию">
+      <Search styleName="search" placeholder="Поиск по названию сообщества или описанию">
         <div styleName="sort">
-          <span>Сортировать по:</span>
+          <span styleName="sort-title">Сортировать по:</span>
           <Select styleName="sort-select" defaultValue="popular">
             {options.map(o => (
               <Option value={o.value}>{o.label}</Option>
