@@ -1,9 +1,11 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Icon, Select } from 'antd';
+import { graphql } from 'react-relay';
 import Search from 'components/molecules/Search';
 import Tag from 'components/atoms/Tag';
 import GroupCard from 'components/organisms/GroupCard';
+import withQueryRenderer from 'hocs/withQueryRenderer';
 import Masonry from 'react-masonry-css';
 import './Catalog.css';
 
@@ -143,185 +145,13 @@ const options = [
   },
 ];
 
-const groups = [
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-  {
-    title: 'test',
-    people: 150000,
-    description:
-      'Чилаут в англоязычном мире — метафорическое обозначение лёгкой музыки, призванной способствовать снятию психического напряжения, релаксации.',
-    tags: ['123', 'gaggas', 'fdsfas'],
-  },
-  {
-    title: 'test2',
-    people: 1,
-    description: 'маленькое описание',
-    tags: ['1'],
-  },
-];
-
 const breakpointColumnsObj = {};
 
 new Array(250).fill('').forEach((_, i) => {
   breakpointColumnsObj[531 * (i + 1)] = i + 1;
 });
 
-const Catalog = () => (
+const Catalog = ({ communities }) => (
   <div styleName="root">
     <div styleName="header">
       <Search placeholder="Поиск по названию сообщества или описанию">
@@ -358,12 +188,29 @@ const Catalog = () => (
     </div>
     <div styleName="groups">
       <Masonry breakpointCols={breakpointColumnsObj}>
-        {groups.map(g => (
-          <GroupCard title={g.title} people={g.people} desc={g.description} tags={g.tags} />
-        ))}
+        {communities.edges.map(e => e.node && <GroupCard key={e.node.id} data={e.node} />)}
       </Masonry>
     </div>
   </div>
 );
 
-export default Catalog;
+Catalog.propTypes = {
+  communities: PropTypes.array.isRequired,
+};
+
+const query = graphql`
+  query CatalogQuery {
+    communities(first: 20) {
+      edges {
+        node {
+          id
+          ...GroupCard
+        }
+      }
+    }
+  }
+`;
+
+const enhance = withQueryRenderer(query);
+
+export default enhance(Catalog);
