@@ -11,4 +11,5 @@ RUN SUBSCRIBE_ENDPOINT=wss://13.59.234.201/subscriptions \
     yarn build
 
 FROM nginx:1.15.2-alpine
+COPY nginx.conf /etc/nginx/nginx.conf
 COPY --from=build /app/dist /usr/share/nginx/html
