@@ -1,29 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { createFragmentContainer, graphql } from 'react-relay';
 import { Avatar, Icon, Button } from 'antd';
 import Tag from 'components/atoms/Tag';
 import './GroupCard.css';
 
-const GroupCard = ({ title, people, desc, tags }) => (
+const GroupCard = ({ data }) => (
   <div styleName="root">
     <div styleName="header">
       <div styleName="group-info">
         <Avatar size={48} icon="user" />
         <div styleName="group-data">
-          <span styleName="title">{title}</span>
+          <span styleName="title">{data.name}</span>
           <div styleName="viewers">
             <Icon type="user" styleName="viewer-icon" />
-            <span>{people}</span>
+            <span>{data.userCount}</span>
           </div>
         </div>
       </div>
       <Icon type="ellipsis" styleName="more-icon" />
     </div>
     <div styleName="footer">
-      <span>{desc}</span>
+      <span>{data.shortDescription}</span>
       <div styleName="tags">
-        {tags.map(t => (
-          <Tag label={t} />
+        {data.tags.map(t => (
+          <Tag key={t} label={t} />
         ))}
       </div>
       <div styleName="buttons">
@@ -37,10 +38,17 @@ const GroupCard = ({ title, people, desc, tags }) => (
 );
 
 GroupCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  people: PropTypes.number.isRequired,
-  desc: PropTypes.string.isRequired,
-  tags: PropTypes.array.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
-export default GroupCard;
+export default createFragmentContainer(
+  GroupCard,
+  graphql`
+    fragment GroupCard on Community {
+      name
+      tags
+      userCount
+      shortDescription
+    }
+  `
+);
