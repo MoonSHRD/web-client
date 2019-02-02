@@ -42,6 +42,10 @@ const Room = ({ id, matrixClient }) => {
 
   useEffect(
     () => {
+      matrixClient.joinRoom(id).done(() => {
+        console.log('Auto-joined %s', id);
+      });
+
       const sub = requestSubscription(relayEnvironment, {
         subscription,
         variables: {
