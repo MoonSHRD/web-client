@@ -74,7 +74,7 @@ export default createFragmentContainer(
       avatarUrl
       name
 
-      rooms {
+      rooms(first: 99) @connection(key: "GroupCollapse_rooms") {
         edges {
           node {
             id

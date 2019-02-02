@@ -66,6 +66,19 @@ const enhance = compose(
         communityId: props.communityId,
       },
     },
+    configs: [
+      {
+        type: 'RANGE_ADD',
+        parentID: props.communityId,
+        connectionInfo: [
+          {
+            key: 'GroupCollapse_rooms',
+            rangeBehavior: 'append',
+          },
+        ],
+        edgeName: 'edge',
+      },
+    ],
     onCompleted: ({ createRoom }) => {
       if (createRoom.errors) {
         props.form.setFields(getFieldErrors(props.form, values, createRoom.errors));
