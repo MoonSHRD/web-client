@@ -178,8 +178,9 @@ type Query {
   user(id: ID!): User
   group(id: ID!): Group
   groups: [Group!]!
-  community(rowId: Int!): Community
+  community(id: ID, rowId: Int): Community
   communities(after: String, first: Int, search: String): CommunityConnection
+  allCommunityTags: [String!]!
 }
 
 type Room implements Node {

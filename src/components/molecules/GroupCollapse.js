@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import { graphql, createFragmentContainer } from 'react-relay';
 import PropTypes from 'prop-types';
-import { Avatar, Icon, Button } from 'antd';
+import { Avatar, Icon } from 'antd';
 import { Link } from '@reach/router';
 import ModalLink from 'components/atoms/ModalLink';
-import Room from 'components/atoms/Room';
+import IconItem from 'components/atoms/IconItem';
+import qs from 'query-string';
 import './GroupCollapse.css';
 
 const GroupCollapse = ({ opened, header, data, activeRoomId, onClick }) => (
@@ -15,11 +16,7 @@ const GroupCollapse = ({ opened, header, data, activeRoomId, onClick }) => (
         <Avatar size={48} icon="user" src={data.avatarUrl} />
         <div styleName="info">
           <span styleName="groupName">{header}</span>
-          <span styleName="groupDesc">
-            <Link to={`/community/${data.rowId}/settings`} style={{ color: '#aaa' }}>
-              Настройки
-            </Link>
-          </span>
+          <span styleName="groupDesc">{data.description || 'TODO: Добавить описание'}</span>
         </div>
       </div>
       <div styleName="headerRight">
@@ -30,22 +27,28 @@ const GroupCollapse = ({ opened, header, data, activeRoomId, onClick }) => (
     {opened && (
       <Fragment>
         <div styleName="rooms">
+          <ModalLink component={IconItem} icon="plus" to="createRoom" params={{ communityId: data.id }}>
+            Создать чат
+          </ModalLink>
+          <IconItem component={Link} icon="setting" to={`/community/${data.id}`}>
+            Настройки
+          </IconItem>
           {data.rooms.edges.map(
             roomEdge =>
               roomEdge.node && (
-                <Room
-                  room={roomEdge.node}
+                <IconItem
+                  component={Link}
+                  icon="message"
                   key={roomEdge.node.id}
                   active={roomEdge.node.id === activeRoomId}
-                  communityId={data.id}
-                />
+                  to={`/room/${roomEdge.node.id}?${qs.stringify({ openedCommunity: data.id })}`}
+                >
+                  {roomEdge.node.name}
+                </IconItem>
               )
           )}
         </div>
         {data.rooms.edges.length === 0 && <div>Rooms not found</div>}
-        <ModalLink component={Button} to="createRoom" params={{ communityId: data.id }} size="small">
-          Create Room
-        </ModalLink>
       </Fragment>
     )}
   </div>

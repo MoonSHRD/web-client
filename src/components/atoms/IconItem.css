@@ -1,0 +1,20 @@
+.normal,
+.active {
+  display: block;
+  margin-bottom: 20px;
+  cursor: pointer;
+  transition: color 0.2s ease-in-out;
+}
+
+.normal:hover {
+  color: #eee !important; /* override ant link styles */
+}
+
+.active {
+  color: #fff !important;
+}
+
+.icon {
+  padding-right: 16px;
+  font-size: 16px !important;
+}

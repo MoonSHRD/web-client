@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link, Location, navigate } from '@reach/router';
+import { Location, navigate } from '@reach/router';
 import { graphql } from 'react-relay';
 import withQueryRenderer from 'hocs/withQueryRenderer';
 import Search from 'components/molecules/Search';
@@ -10,17 +10,14 @@ import ModalLink from 'components/atoms/ModalLink';
 import qs from 'query-string';
 import './ChatSidebar.css';
 
-const getHeader = data => (
-  <div>
-    {data.name}
-    <Link to={`/community/${data.rowId}`}>View</Link>
-  </div>
-);
+const getHeader = data => <div>{data.name}</div>;
 
 const Sidebar = ({ className, communities, ...props }) => (
   <Location>
     {({ location }) => {
       const query = qs.parse(location.search);
+      const communityMatch = location.pathname.match(/community\/([^/]+)/);
+      const openedCommunity = query.openedCommunity || (communityMatch && communityMatch[1]);
 
       const activeRoomMatch = location.pathname.match(/room\/([^/]+)/);
       const activeRoomId = activeRoomMatch && activeRoomMatch[1];
@@ -28,7 +25,7 @@ const Sidebar = ({ className, communities, ...props }) => (
       const toggleCommunity = node => {
         const newQuery = {
           ...query,
-          openedCommunity: node.id === query.openedCommunity ? undefined : node.id,
+          openedCommunity: node.id === openedCommunity ? undefined : node.id,
         };
 
         navigate(`${location.pathname}?${qs.stringify(newQuery)}`);
@@ -45,7 +42,7 @@ const Sidebar = ({ className, communities, ...props }) => (
           {communities.edges.map(edge => (
             <GroupCollapse
               onClick={() => toggleCommunity(edge.node)}
-              opened={query.openedCommunity === edge.node.id}
+              opened={openedCommunity === edge.node.id}
               header={getHeader(edge.node)}
               key={edge.node.id}
               activeRoomId={activeRoomId}

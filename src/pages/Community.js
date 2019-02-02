@@ -19,8 +19,8 @@ const Community = ({ community, viewer }) => {
 };
 
 const query = graphql`
-  query CommunityQuery($id: Int!) {
-    community(rowId: $id) {
+  query CommunityQuery($id: ID!) {
+    community(id: $id) {
       id
       name
       shortDescription
