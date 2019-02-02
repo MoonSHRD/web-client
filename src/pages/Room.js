@@ -25,14 +25,12 @@ const subscription = graphql`
 
 const query = graphql`
   query RoomQuery($id: ID!) {
-    viewer {
-      room(id: $id) {
-        id
+    room(id: $id) {
+      id
 
-        messages(last: 30) @connection(key: "Room_messages") {
-          edges {
-            ...RoomTimeline_messageEdges
-          }
+      messages(last: 30) @connection(key: "Room_messages") {
+        edges {
+          ...RoomTimeline_messageEdges
         }
       }
     }
@@ -91,12 +89,12 @@ const Room = ({ id, matrixClient }) => {
         }
 
         // eslint-disable-next-line react/prop-types
-        if (!props.viewer) {
-          return <div>Viewer not found</div>;
+        if (!props.room) {
+          return <div>Room not found</div>;
         }
 
         // eslint-disable-next-line react/prop-types
-        const { room } = props.viewer;
+        const { room } = props;
 
         return (
           <div styleName="root">

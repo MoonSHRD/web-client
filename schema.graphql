@@ -226,6 +226,7 @@ type Query {
   ): Node
   viewer(accessToken: String, userId: String): Viewer
   user(id: ID!): User
+  room(id: ID!): Room
   group(id: ID!): Group
   groups: [Group!]!
   community(id: ID, rowId: Int): Community
@@ -306,6 +307,7 @@ type User implements Node {
   """The ID of an object"""
   id: ID!
   name: String!
+  ownCommunities(after: String, first: Int): CommunityConnection
   ownGroups: [Group!]!
 }
 
@@ -321,6 +323,5 @@ type Viewer {
     before: String
     last: Int
   ): CommunityUserConnection
-  room(id: ID!): Room
 }
 
