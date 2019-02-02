@@ -3,21 +3,19 @@ import PropTypes from 'prop-types';
 import ChatSidebar from 'components/organisms/ChatSidebar';
 import './Chat.css';
 
-const Chat = ({ children, selectedRoom }) => (
+const Chat = ({ children }) => (
   <div styleName="root">
-    <ChatSidebar selectedRoom={selectedRoom} />
+    <ChatSidebar />
     {children}
   </div>
 );
 
 Chat.propTypes = {
   children: PropTypes.any,
-  selectedRoom: PropTypes.string,
 };
 
 Chat.defaultProps = {
   children: undefined,
-  selectedRoom: '',
 };
 
 export default Chat;

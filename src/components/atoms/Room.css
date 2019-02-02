@@ -1,4 +1,6 @@
 .root {
+  display: block;
+  margin-bottom: 20px;
 }
 
 .root.active * {

@@ -4,6 +4,7 @@ import { compose } from 'redux';
 import { graphql } from 'react-relay';
 import withMutation from 'hocs/withMutation';
 import { Modal, Form, Button, Input } from 'antd';
+import qs from 'query-string';
 import { hasErrors, makeHandleSubmit, getFieldErrors } from '../utils/form';
 
 const CreateRoomModal = ({ save, onClose, form }) => {
@@ -71,7 +72,11 @@ const enhance = compose(
         return;
       }
 
-      props.navigate(`/room/${createRoom.edge.node.id}`);
+      const search = qs.stringify({
+        openedCommunity: props.communityId,
+      });
+
+      props.navigate(`/room/${createRoom.edge.node.id}?${search}`);
     },
   }))
 );

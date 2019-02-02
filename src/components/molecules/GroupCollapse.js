@@ -7,7 +7,7 @@ import ModalLink from 'components/atoms/ModalLink';
 import Room from 'components/atoms/Room';
 import './GroupCollapse.css';
 
-const GroupCollapse = ({ opened, header, data, selectedRoom, onClick }) => (
+const GroupCollapse = ({ opened, header, data, activeRoomId, onClick }) => (
   <div styleName="root">
     {/* eslint-disable-next-line */}
     <div onClick={onClick} role="button" styleName={`header ${opened ? 'opened' : ''}`}>
@@ -32,7 +32,14 @@ const GroupCollapse = ({ opened, header, data, selectedRoom, onClick }) => (
         <div styleName="rooms">
           {data.rooms.edges.map(
             roomEdge =>
-              roomEdge.node && <Room room={roomEdge.node} key={roomEdge.node.id} selectedRoom={selectedRoom} />
+              roomEdge.node && (
+                <Room
+                  room={roomEdge.node}
+                  key={roomEdge.node.id}
+                  active={roomEdge.node.id === activeRoomId}
+                  communityId={data.id}
+                />
+              )
           )}
         </div>
         {data.rooms.edges.length === 0 && <div>Rooms not found</div>}
@@ -47,13 +54,14 @@ const GroupCollapse = ({ opened, header, data, selectedRoom, onClick }) => (
 GroupCollapse.propTypes = {
   opened: PropTypes.bool,
   header: PropTypes.any,
-  selectedRoom: PropTypes.string.isRequired,
+  activeRoomId: PropTypes.string,
   data: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
 };
 
 GroupCollapse.defaultProps = {
   opened: true,
+  activeRoomId: undefined,
   header: undefined,
 };
 

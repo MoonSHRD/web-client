@@ -24,6 +24,7 @@ import CommunitiesList from './pages/CommunitiesList';
 import User from './pages/User';
 import Catalog from './pages/Catalog';
 import GroupSettings from './pages/GroupSettings';
+import Chat from './components/templates/Chat';
 
 const { store, persistor } = createStore();
 const relayEnvironment = createRelayEnvironment(store);
@@ -36,11 +37,13 @@ const tree = (
           <MatrixClientContext.Provider value={context.matrixClient}>
             <RelayEnvironmentContext.Provider value={relayEnvironment}>
               <Router>
-                <Home path="/" {...context} />
+                <Chat {...context} path="/" relayEnvironment={relayEnvironment}>
+                  <Home path="/" {...context} relayEnvironment={relayEnvironment} />
+                  <Room path="/room/:id" {...context} relayEnvironment={relayEnvironment} />
+                  <Community path="/community/:id" {...context} relayEnvironment={relayEnvironment} />
+                </Chat>
                 <GroupSettings path="group/:id/settings" {...context} relayEnvironment={relayEnvironment} />
-                <Room path="room/:id" {...context} relayEnvironment={relayEnvironment} />
                 <CommunitiesList path="communities" {...context} relayEnvironment={relayEnvironment} />
-                <Community path="community/:id" {...context} relayEnvironment={relayEnvironment} />
                 <Profile path="profile" {...context} />
                 <Payments path="payments" {...context} />
                 <Settings path="settings" {...context} />

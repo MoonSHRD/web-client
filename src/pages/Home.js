@@ -1,15 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import Chat from 'components/templates/Chat';
+// import PropTypes from 'prop-types';
 
-const Home = ({ matrixRooms }) => (
-  <Chat matrixRooms={matrixRooms}>
-    <h2>Home</h2>
-  </Chat>
-);
+const Home = () => <h2>Home page</h2>;
 
-Home.propTypes = {
-  matrixRooms: PropTypes.object.isRequired,
-};
+Home.propTypes = {};
 
 export default Home;

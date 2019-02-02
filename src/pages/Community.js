@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { graphql } from 'react-relay';
 
 import withQueryRenderer from 'hocs/withQueryRenderer';
-import Chat from 'components/templates/Chat';
 
 const Community = ({ community, viewer }) => {
   if (!community || !viewer) {
@@ -11,11 +10,11 @@ const Community = ({ community, viewer }) => {
   }
 
   return (
-    <Chat>
+    <div>
       <h2>{community.name}</h2>
       {JSON.stringify(community)}
       {JSON.stringify(viewer.groupMembership)}
-    </Chat>
+    </div>
   );
 };
 
