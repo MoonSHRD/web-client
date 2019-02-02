@@ -11,6 +11,7 @@ type Community {
   tags: [ID!]!
   generalRoomId: ID!
   rooms(after: String, first: Int, before: String, last: Int): RoomConnection
+  communityUsers(after: String, first: Int, before: String, last: Int): CommunityUserConnection
 }
 
 """A connection to a list of items."""
@@ -26,6 +27,34 @@ type CommunityConnection {
 type CommunityEdge {
   """The item at the end of the edge"""
   node: Community
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+type CommunityUser {
+  """The ID of an object"""
+  id: ID!
+  communityId: ID!
+  userId: ID!
+  community: Community!
+  user: User!
+  createdAt: String!
+}
+
+"""A connection to a list of items."""
+type CommunityUserConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [CommunityUserEdge]
+}
+
+"""An edge in a connection."""
+type CommunityUserEdge {
+  """The item at the end of the edge"""
+  node: CommunityUser
 
   """A cursor for use in pagination"""
   cursor: String!
@@ -87,23 +116,35 @@ type GroupMembership {
   group: Group!
 }
 
-input JoinInput {
-  groupId: ID!
+type JoinCommunity {
+  common: String
+  communityId: String
+}
+
+input JoinCommunityInput {
+  communityId: ID!
   clientMutationId: String
 }
 
-type JoinPayload {
-  success: Boolean!
+type JoinCommunityPayload {
+  userEdge: MonsterCommunityUserEdge
+  errors: JoinCommunity
   clientMutationId: String
 }
 
-input LeaveInput {
-  groupId: ID!
+type LeaveCommunity {
+  common: String
+  communityId: String
+}
+
+input LeaveCommunityInput {
+  communityId: ID!
   clientMutationId: String
 }
 
-type LeavePayload {
-  success: Boolean!
+type LeaveCommunityPayload {
+  deletedId: ID
+  errors: LeaveCommunity
   clientMutationId: String
 }
 
@@ -121,6 +162,15 @@ type MonsterCommunityEdge {
 }
 
 """An edge in a connection."""
+type MonsterCommunityUserEdge {
+  """The item at the end of the edge"""
+  node: CommunityUser
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
+"""An edge in a connection."""
 type MonsterRoomEdge {
   """The item at the end of the edge"""
   node: Room
@@ -130,10 +180,10 @@ type MonsterRoomEdge {
 }
 
 type Mutation {
-  join(input: JoinInput!): JoinPayload
-  leave(input: LeaveInput!): LeavePayload
   uploadGroupAvatar(input: UploadGroupAvatarInput!): UploadGroupAvatarPayload
   createCommunity(input: CreateCommunityInput!): CreateCommunityPayload
+  joinCommunity(input: JoinCommunityInput!): JoinCommunityPayload
+  leaveCommunity(input: LeaveCommunityInput!): LeaveCommunityPayload
   createRoom(input: CreateRoomInput!): CreateRoomPayload
 }
 
@@ -262,6 +312,15 @@ type User implements Node {
 type Viewer {
   id: ID!
   groupMembership(isAdmin: Boolean): [GroupMembership!]!
+  joinedCommunityIds: [ID!]!
+  joinedCommunityUsers(
+    """for check subscription"""
+    communityIds: [ID!]
+    after: String
+    first: Int
+    before: String
+    last: Int
+  ): CommunityUserConnection
   room(id: ID!): Room
 }
 

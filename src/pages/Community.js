@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-relay';
+import CommunityAction from 'components/organisms/CommunityAction';
 
 import withQueryRenderer from 'hocs/withQueryRenderer';
 
@@ -12,8 +13,7 @@ const Community = ({ community, viewer }) => {
   return (
     <div>
       <h2>{community.name}</h2>
-      {JSON.stringify(community)}
-      {JSON.stringify(viewer.groupMembership)}
+      <CommunityAction viewer={viewer} data={community} />
     </div>
   );
 };
@@ -24,13 +24,11 @@ const query = graphql`
       id
       name
       shortDescription
+      ...CommunityAction
     }
 
     viewer {
-      groupMembership(isAdmin: true) {
-        groupId
-        isAdmin
-      }
+      ...CommunityAction_viewer
     }
   }
 `;
