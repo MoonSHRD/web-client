@@ -5,7 +5,7 @@ COPY package.json yarn.lock /app/
 RUN yarn
 
 COPY . /app/
-RUN SUBSCRIBE_ENDPOINT=wss://13.59.234.201/subscriptions \
+RUN SUBSCRIBE_ENDPOINT=wss://13.59.234.201.xip.io/subscriptions \
     GRAPHQL_ENDPOINT=/graphql \
     MATRIX_ENDPOINT="" \
     yarn build
