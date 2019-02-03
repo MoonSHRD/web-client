@@ -1,6 +1,6 @@
 import { Environment, Network, RecordSource, Store } from 'relay-runtime';
 
-import { SubscriptionClient } from 'subscriptions-transport-ws';
+const proxyUrl = process.env.PROXY_URL || 'http://localhost:4000';
 
 export default store => {
   function fetchQuery(operation, variables) {
@@ -15,7 +15,7 @@ export default store => {
       headers['X-User-Id'] = matrix.userId;
     }
 
-    return fetch(process.env.GRAPHQL_ENDPOINT, {
+    return fetch(`${proxyUrl}/graphql`, {
       method: 'POST',
       headers,
       body: JSON.stringify({
@@ -25,34 +25,8 @@ export default store => {
     }).then(response => response.json());
   }
 
-  const setupSubscription = (request, variables, cacheConfig, observer) => {
-    const query = request.text;
-    const { matrix } = store.getState();
-
-    const client = new SubscriptionClient(process.env.SUBSCRIBE_ENDPOINT, {
-      reconnect: false,
-      connectionParams: matrix,
-    });
-
-    const sub = client.request({ query, variables }).subscribe({
-      next(data) {
-        return observer.onNext(data);
-      },
-      error(err) {
-        return observer.onError(err);
-      },
-      complete() {
-        return observer.onCompleted();
-      },
-    });
-
-    return {
-      dispose: () => sub.unsubscribe(),
-    };
-  };
-
   const environment = new Environment({
-    network: Network.create(fetchQuery, setupSubscription),
+    network: Network.create(fetchQuery),
     store: new Store(new RecordSource()),
   });
 

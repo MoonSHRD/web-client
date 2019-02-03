@@ -16,7 +16,7 @@ const Signup = ({ form, updateMatrix }) => {
     }
 
     const client = sdk.createClient({
-      baseUrl: process.env.MATRIX_ENDPOINT || 'https://13.59.234.201.xip.io',
+      baseUrl: process.env.PROXY_URL || 'http://localhost:4000',
     });
 
     try {
