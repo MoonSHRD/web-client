@@ -54,6 +54,7 @@ const mutation = graphql`
       }
 
       errors {
+        common
         name
       }
     }

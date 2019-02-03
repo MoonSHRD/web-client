@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Input, Button } from 'antd';
 import { camelizeKeys } from 'humps';
+import { Link } from '@reach/router';
 import { hasErrors, makeHandleSubmit } from '../utils/form';
 import './Login.css';
 
@@ -48,6 +49,7 @@ const Login = ({ matrixClient, form, setMatrix }) => {
             Log in
           </Button>
         </Form.Item>
+        <Link to="/signup">Signup</Link>
       </Form>
     </div>
   );

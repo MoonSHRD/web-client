@@ -15,6 +15,10 @@ const getHeader = data => <div>{data.name}</div>;
 const Sidebar = ({ className, communities, ...props }) => (
   <Location>
     {({ location }) => {
+      if (!communities) {
+        return null;
+      }
+
       const query = qs.parse(location.search);
       const communityMatch = location.pathname.match(/community\/([^/]+)/);
       const openedCommunity = query.openedCommunity || (communityMatch && communityMatch[1]);
@@ -57,11 +61,12 @@ const Sidebar = ({ className, communities, ...props }) => (
 
 Sidebar.propTypes = {
   className: PropTypes.string,
-  communities: PropTypes.object.isRequired,
+  communities: PropTypes.object,
 };
 
 Sidebar.defaultProps = {
   className: undefined,
+  communities: undefined,
 };
 
 const query = graphql`
