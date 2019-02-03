@@ -12,10 +12,10 @@ import './ChatSidebar.css';
 
 const getHeader = data => <div>{data.name}</div>;
 
-const Sidebar = ({ className, communities, ...props }) => (
+const Sidebar = ({ className, communities, viewer, ...props }) => (
   <Location>
     {({ location }) => {
-      if (!communities) {
+      if (!communities || !viewer) {
         return null;
       }
 
@@ -51,6 +51,7 @@ const Sidebar = ({ className, communities, ...props }) => (
               key={edge.node.id}
               activeRoomId={activeRoomId}
               data={edge.node}
+              viewer={viewer}
             />
           ))}
         </div>
@@ -62,15 +63,21 @@ const Sidebar = ({ className, communities, ...props }) => (
 Sidebar.propTypes = {
   className: PropTypes.string,
   communities: PropTypes.object,
+  viewer: PropTypes.object,
 };
 
 Sidebar.defaultProps = {
   className: undefined,
   communities: undefined,
+  viewer: undefined,
 };
 
 const query = graphql`
   query ChatSidebarQuery {
+    viewer {
+      ...GroupCollapse_viewer
+    }
+
     communities {
       edges {
         node {

@@ -8,51 +8,59 @@ import IconItem from 'components/atoms/IconItem';
 import qs from 'query-string';
 import './GroupCollapse.css';
 
-const GroupCollapse = ({ opened, header, data, activeRoomId, onClick }) => (
-  <div styleName="root">
-    {/* eslint-disable-next-line */}
-    <div onClick={onClick} role="button" styleName={`header ${opened ? 'opened' : ''}`}>
-      <div styleName="headerLeft">
-        <Avatar size={48} icon="user" src={data.avatarUrl} />
-        <div styleName="info">
-          <span styleName="groupName">{header}</span>
-          <span styleName="groupDesc">{data.description || 'TODO: Добавить описание'}</span>
+const GroupCollapse = ({ opened, header, data, activeRoomId, onClick, viewer }) => {
+  const isOwner = viewer.ownCommunityIds.includes(data.id);
+
+  return (
+    <div styleName="root">
+      {/* eslint-disable-next-line */}
+      <div onClick={onClick} role="button" styleName={`header ${opened ? 'opened' : ''}`}>
+        <div styleName="headerLeft">
+          <Avatar size={48} icon="user" src={data.avatarUrl} />
+          <div styleName="info">
+            <span styleName="groupName">{header}</span>
+            <span styleName="groupDesc">{data.description || 'TODO: Добавить описание'}</span>
+          </div>
+        </div>
+        <div styleName="headerRight">
+          <Icon type="info-circle" />
+          <Icon type={opened ? 'up' : 'down'} />
         </div>
       </div>
-      <div styleName="headerRight">
-        <Icon type="info-circle" />
-        <Icon type={opened ? 'up' : 'down'} />
-      </div>
-    </div>
-    {opened && (
-      <Fragment>
-        <div styleName="rooms">
-          <ModalLink component={IconItem} icon="plus" to="createRoom" params={{ communityId: data.id }}>
-            Создать чат
-          </ModalLink>
-          <IconItem component={Link} icon="setting" to={`/community/${data.id}`}>
-            Настройки
-          </IconItem>
-          {data.rooms.edges.map(
-            roomEdge =>
-              roomEdge.node && (
-                <IconItem
-                  component={Link}
-                  icon="message"
-                  key={roomEdge.node.id}
-                  active={roomEdge.node.id === activeRoomId}
-                  to={`/room/${roomEdge.node.id}?${qs.stringify({ openedCommunity: data.id })}`}
-                >
-                  {roomEdge.node.name}
+      {opened && (
+        <Fragment>
+          <div styleName="rooms">
+            {isOwner && (
+              <React.Fragment>
+                <ModalLink component={IconItem} icon="plus" to="createRoom" params={{ communityId: data.id }}>
+                  Создать чат
+                </ModalLink>
+                <IconItem component={Link} icon="setting" to={`/community/${data.id}`}>
+                  Настройки
                 </IconItem>
-              )
-          )}
-        </div>
-        {data.rooms.edges.length === 0 && <div>Rooms not found</div>}
-      </Fragment>
-    )}
-  </div>
-);
+              </React.Fragment>
+            )}
+            {data.rooms.edges.map(
+              roomEdge =>
+                roomEdge.node && (
+                  <IconItem
+                    component={Link}
+                    icon="message"
+                    key={roomEdge.node.id}
+                    active={roomEdge.node.id === activeRoomId}
+                    to={`/room/${roomEdge.node.id}?${qs.stringify({ openedCommunity: data.id })}`}
+                  >
+                    {roomEdge.node.name}
+                  </IconItem>
+                )
+            )}
+          </div>
+          {data.rooms.edges.length === 0 && <div>Rooms not found</div>}
+        </Fragment>
+      )}
+    </div>
+  );
+};
 
 GroupCollapse.propTypes = {
   opened: PropTypes.bool,
@@ -60,6 +68,7 @@ GroupCollapse.propTypes = {
   activeRoomId: PropTypes.string,
   data: PropTypes.object.isRequired,
   onClick: PropTypes.func.isRequired,
+  viewer: PropTypes.object.isRequired,
 };
 
 GroupCollapse.defaultProps = {
@@ -71,6 +80,11 @@ GroupCollapse.defaultProps = {
 export default createFragmentContainer(
   GroupCollapse,
   graphql`
+    fragment GroupCollapse_viewer on Viewer {
+      id
+      ownCommunityIds
+    }
+
     fragment GroupCollapse on Community {
       id
       rowId
