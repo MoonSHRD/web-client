@@ -23,6 +23,7 @@ import Community from './pages/Community';
 import CommunitiesList from './pages/CommunitiesList';
 import User from './pages/User';
 import Catalog from './pages/Catalog';
+import Signup from './pages/Signup';
 import GroupSettings from './pages/GroupSettings';
 import Chat from './components/templates/Chat';
 
@@ -32,29 +33,33 @@ const relayEnvironment = createRelayEnvironment(store);
 const tree = (
   <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
-      <App>
-        {context => (
-          <MatrixClientContext.Provider value={context.matrixClient}>
-            <RelayEnvironmentContext.Provider value={relayEnvironment}>
-              <Router>
-                <Chat {...context} path="/" relayEnvironment={relayEnvironment}>
-                  <Home path="/" {...context} relayEnvironment={relayEnvironment} />
-                  <Room path="/room/:id" {...context} relayEnvironment={relayEnvironment} />
-                </Chat>
-                <Community path="/community/:id" {...context} relayEnvironment={relayEnvironment} />
-                <GroupSettings path="group/:id/settings" {...context} relayEnvironment={relayEnvironment} />
-                <CommunitiesList path="communities" {...context} relayEnvironment={relayEnvironment} />
-                <Profile path="profile" {...context} />
-                <Payments path="payments" {...context} />
-                <Settings path="settings" {...context} />
-                <User path="user/:name" {...context} />
-                <Catalog path="catalog" {...context} />
-              </Router>
-              <Location>{props => <ModalRenderer modals={modals} {...props} {...context} />}</Location>
-            </RelayEnvironmentContext.Provider>
-          </MatrixClientContext.Provider>
-        )}
-      </App>
+      <Router>
+        <Signup path="/signup" />
+        <App
+          path="/*"
+          render={context => (
+            <MatrixClientContext.Provider value={context.matrixClient}>
+              <RelayEnvironmentContext.Provider value={relayEnvironment}>
+                <Router>
+                  <Chat {...context} path="/" relayEnvironment={relayEnvironment}>
+                    <Home path="/" {...context} relayEnvironment={relayEnvironment} />
+                    <Room path="/room/:id" {...context} relayEnvironment={relayEnvironment} />
+                  </Chat>
+                  <Community path="/community/:id" {...context} relayEnvironment={relayEnvironment} />
+                  <GroupSettings path="group/:id/settings" {...context} relayEnvironment={relayEnvironment} />
+                  <CommunitiesList path="communities" {...context} relayEnvironment={relayEnvironment} />
+                  <Profile path="profile" {...context} />
+                  <Payments path="payments" {...context} />
+                  <Settings path="settings" {...context} />
+                  <User path="user/:name" {...context} />
+                  <Catalog path="catalog" {...context} />
+                </Router>
+                <Location>{props => <ModalRenderer modals={modals} {...props} {...context} />}</Location>
+              </RelayEnvironmentContext.Provider>
+            </MatrixClientContext.Provider>
+          )}
+        />
+      </Router>
     </PersistGate>
   </Provider>
 );

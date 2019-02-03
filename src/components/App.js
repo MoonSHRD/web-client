@@ -8,7 +8,7 @@ import MainMenu from './MainMenu';
 import { useMatrix } from './hooks';
 import './App.css';
 
-const App = ({ matrix, updateMatrix, children }) => {
+const App = ({ matrix, updateMatrix, render }) => {
   const { matrixClient, matrixRooms } = useMatrix(matrix);
 
   if (!matrixClient) {
@@ -22,15 +22,19 @@ const App = ({ matrix, updateMatrix, children }) => {
   return (
     <div styleName="root">
       <MainMenu styleName="menu" />
-      <div styleName="content">{children({ matrixClient, matrixRooms })}</div>
+      <div styleName="content">{render({ matrixClient, matrixRooms })}</div>
     </div>
   );
 };
 
 App.propTypes = {
-  matrix: PropTypes.object.isRequired,
+  matrix: PropTypes.object,
   updateMatrix: PropTypes.func.isRequired,
-  children: PropTypes.func.isRequired,
+  render: PropTypes.func.isRequired,
+};
+
+App.defaultProps = {
+  matrix: null,
 };
 
 const selector = state => ({ matrix: state.matrix });

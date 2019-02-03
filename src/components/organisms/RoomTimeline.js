@@ -1,40 +1,33 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import { graphql, createFragmentContainer } from 'react-relay';
 import RoomMessage from 'components/organisms/RoomMessage';
 import './RoomTimeline.css';
 
-const RoomTimeline = ({ messageEdges }) => {
+const RoomTimeline = ({ data }) => {
   const rootEl = useRef(null);
 
   useLayoutEffect(
     () => {
       rootEl.current.scrollTo(0, rootEl.current.scrollHeight);
     },
-    [rootEl, messageEdges]
+    [rootEl, data]
   );
 
   return (
     <div styleName="timeline" ref={rootEl}>
-      {messageEdges.map(i => (
-        <RoomMessage key={i.node.id} data={i.node} />
-      ))}
+      {data.map(e => {
+        if (e.event.type === 'm.room.message') {
+          return <RoomMessage key={e.event.event_id} data={e.event} />;
+        }
+
+        return <div key={e.event.event_id}>{e.event.type}</div>;
+      })}
     </div>
   );
 };
 
 RoomTimeline.propTypes = {
-  messageEdges: PropTypes.array.isRequired,
+  data: PropTypes.array.isRequired,
 };
 
-export default createFragmentContainer(
-  RoomTimeline,
-  graphql`
-    fragment RoomTimeline_messageEdges on RoomMessageEdge @relay(plural: true) {
-      node {
-        id
-        ...RoomMessage
-      }
-    }
-  `
-);
+export default RoomTimeline;

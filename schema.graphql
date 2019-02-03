@@ -314,6 +314,7 @@ type User implements Node {
 type Viewer {
   id: ID!
   groupMembership(isAdmin: Boolean): [GroupMembership!]!
+  ownCommunityIds: [ID!]!
   joinedCommunityIds: [ID!]!
   joinedCommunityUsers(
     """for check subscription"""
