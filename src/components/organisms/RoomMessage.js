@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { graphql, createFragmentContainer } from 'react-relay';
 import { Link } from '@reach/router';
 import qs from 'query-string';
 import { Button } from 'antd';
@@ -53,16 +52,4 @@ Message.propTypes = {
   data: PropTypes.object.isRequired,
 };
 
-export default createFragmentContainer(
-  Message,
-  graphql`
-    fragment RoomMessage on RoomMessage {
-      id
-      sender
-
-      content {
-        body
-      }
-    }
-  `
-);
+export default Message;

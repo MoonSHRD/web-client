@@ -1,114 +1,33 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { requestSubscription, graphql } from 'react-relay';
-import QueryLookupRenderer from 'relay-query-lookup-renderer';
 import SendMessage from 'components/SendMessage';
 import RoomTimeline from 'components/organisms/RoomTimeline';
 import RoomHeader from 'components/molecules/RoomHeader';
-import RelayEnvironmentContext from 'components/RelayEnvironmentContext';
-import QueryRendererError from 'components/molecules/QueryRendererError';
-import Loading from 'components/molecules/Loading';
 import './Room.css';
 
-const subscription = graphql`
-  subscription RoomSubscription($input: NewRoomMessageInput!) {
-    newRoomMessage(input: $input) {
-      edge {
-        node {
-          id
-          ...RoomMessage
-        }
-      }
-    }
-  }
-`;
-
-const query = graphql`
-  query RoomQuery($id: ID!) {
-    room(id: $id) {
-      id
-
-      messages(last: 30) @connection(key: "Room_messages") {
-        edges {
-          ...RoomTimeline_messageEdges
-        }
-      }
-    }
-  }
-`;
-
 const Room = ({ id, matrixClient }) => {
-  const relayEnvironment = useContext(RelayEnvironmentContext);
+  const [room, setRoom] = useState(null);
 
   useEffect(
     () => {
-      matrixClient.joinRoom(id).done(() => {
-        console.log('Auto-joined %s', id);
-      });
+      const handler = (e, r) => setRoom(r);
 
-      const sub = requestSubscription(relayEnvironment, {
-        subscription,
-        variables: {
-          input: { roomId: id },
-        },
-        onCompleted: () => {
-          console.log('stop listen');
-        },
-        onError: err => {
-          console.log(err);
-        },
-        configs: [
-          {
-            type: 'RANGE_ADD',
-            parentID: id,
-            connectionInfo: [
-              {
-                key: 'Room_messages',
-                rangeBehavior: 'append',
-              },
-            ],
-            edgeName: 'edge',
-          },
-        ],
-      });
-
-      return () => sub.dispose();
+      matrixClient.on('Room.timeline', handler);
+      return () => matrixClient.removeListener('event', handler);
     },
-    [relayEnvironment, id]
+    [matrixClient]
   );
 
+  if (!room) {
+    return null;
+  }
+
   return (
-    <QueryLookupRenderer
-      lookup
-      environment={relayEnvironment}
-      query={query}
-      variables={{ id }}
-      render={({ props, retry, error }) => {
-        if (error) {
-          return <QueryRendererError error={error} retry={retry} />;
-        }
-
-        if (!props) {
-          return <Loading />;
-        }
-
-        // eslint-disable-next-line react/prop-types
-        if (!props.room) {
-          return <div>Room not found</div>;
-        }
-
-        // eslint-disable-next-line react/prop-types
-        const { room } = props;
-
-        return (
-          <div styleName="root">
-            <RoomHeader />
-            <RoomTimeline messageEdges={room.messages.edges} />
-            <SendMessage styleName="send" matrixClient={matrixClient} roomId={room.id} />
-          </div>
-        );
-      }}
-    />
+    <div styleName="root">
+      <RoomHeader />
+      <RoomTimeline data={room.timeline} />
+      <SendMessage styleName="send" matrixClient={matrixClient} roomId={id} />
+    </div>
   );
 };
 
