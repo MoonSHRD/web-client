@@ -6,7 +6,7 @@ import RoomHeader from 'components/molecules/RoomHeader';
 import './Room.css';
 
 const Room = ({ id, matrixClient }) => {
-  const [room, setRoom] = useState(null);
+  const [room, setRoom] = useState(matrixClient.getRoom(id));
 
   useEffect(
     () => {
