@@ -185,6 +185,7 @@ type Mutation {
   joinCommunity(input: JoinCommunityInput!): JoinCommunityPayload
   leaveCommunity(input: LeaveCommunityInput!): LeaveCommunityPayload
   createRoom(input: CreateRoomInput!): CreateRoomPayload
+  uploadFile(input: UploadFileInput!): UploadFilePayload
 }
 
 input NewRoomMessageInput {
@@ -216,6 +217,11 @@ type PageInfo {
 
   """When paginating forwards, the cursor to continue."""
   endCursor: String
+}
+
+type PresignedPostPolicy {
+  url: String!
+  data: String!
 }
 
 type Query {
@@ -288,6 +294,22 @@ type RoomMessageEdge {
 
 type Subscription {
   newRoomMessage(input: NewRoomMessageInput!): NewRoomMessagePayload
+}
+
+type UploadFile {
+  common: String
+  name: String
+}
+
+input UploadFileInput {
+  name: String!
+  clientMutationId: String
+}
+
+type UploadFilePayload {
+  policy: PresignedPostPolicy
+  errors: UploadFile
+  clientMutationId: String
 }
 
 input UploadGroupAvatarInput {
