@@ -25,7 +25,7 @@ const Room = ({ id, matrixClient }) => {
   return (
     <div styleName="root">
       <RoomHeader />
-      <RoomTimeline data={room.timeline} />
+      <RoomTimeline room={room} />
       <SendMessage styleName="send" matrixClient={matrixClient} roomId={id} />
     </div>
   );

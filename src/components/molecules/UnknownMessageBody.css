@@ -1,0 +1,14 @@
+.root {
+  display: block;
+  height: 22px;
+  width: 250px;
+  box-shadow: rgb(204, 204, 204) 0px 0px 3px inset;
+  border-radius: 11px;
+  background: repeating-linear-gradient(
+    -45deg,
+    rgb(226, 226, 226),
+    rgb(226, 226, 226) 3px,
+    transparent 3px,
+    transparent 6px
+  );
+}

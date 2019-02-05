@@ -1,47 +1,48 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from '@reach/router';
-import qs from 'query-string';
-import { Button } from 'antd';
+import { Menu, Dropdown } from 'antd';
+import { EventStatus } from 'matrix-js-sdk';
+import MatrixClientContext from 'components/MatrixClientContext';
+import UnknownMessageBody from 'components/molecules/UnknownMessageBody';
 import './RoomMessage.css';
 
-const Invoice = ({ amount }) => (
-  <div>
-    Amount: {amount}
-    <Button size="small">Pay</Button>
-  </div>
-);
+const Message = ({ data, room }) => {
+  const { event, status } = data;
+  const cli = useContext(MatrixClientContext);
 
-Invoice.propTypes = {
-  amount: PropTypes.number.isRequired,
-};
-
-const moonshardViews = {
-  invoice: Invoice,
-};
-
-const Message = ({ data }) => {
-  const m = data.content.body.match(/moonshard:view\/(.*)/);
-
-  if (m) {
-    const params = qs.parseUrl(m[1]);
-    const View = moonshardViews[params.url];
-
-    if (View) {
-      // TODO: check dangerouslySetInnerHTML!!!
-      return <View {...params.query} data={data} />;
+  const handleMenuClick = e => {
+    if (e.key === 'remove') {
+      cli.redactEvent(data.getRoomId(), data.getId());
     }
+  };
+
+  // status is SENT before remote-echo, null after
+  const isSent = !status || status === EventStatus.SENT;
+  const canRedact = room.currentState.maySendRedactionForEvent(data, cli.credentials.userId);
+
+  const menuItems = [];
+
+  if (isSent && canRedact) {
+    menuItems.push(<Menu.Item key="remove">Удалить</Menu.Item>);
   }
+
+  const menu = menuItems.length > 0 && <Menu onClick={handleMenuClick}>{menuItems}</Menu>;
 
   return (
     <div styleName="root">
       <div styleName="avatar" />
       <div styleName="content">
         <div styleName="text">
-          <Link to={`/user/${data.sender}`} styleName="sender">
-            {data.sender}
+          <Link to={`/user/${event.sender}`} styleName="sender">
+            {event.sender}
           </Link>
-          {data.content.body}
+          {event.content.body || <UnknownMessageBody event={data} />}
+          {menu && (
+            <Dropdown overlay={menu}>
+              <div>...</div>
+            </Dropdown>
+          )}
         </div>
       </div>
     </div>
@@ -50,6 +51,7 @@ const Message = ({ data }) => {
 
 Message.propTypes = {
   data: PropTypes.object.isRequired,
+  room: PropTypes.object.isRequired,
 };
 
 export default Message;
