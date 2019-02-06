@@ -1,0 +1,269 @@
+.root {
+  padding: 16px 21px;
+  background-color: #efefef;
+  display: flex;
+}
+
+.cardsLine {
+  margin: 16px 0;
+}
+
+.card {
+  margin: 16px 15px;
+  background: #fff;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 15px 1px;
+}
+
+.infoCard {
+  width: 282px;
+}
+
+.communityHeader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: solid #f8f8f8 1px;
+}
+
+.communityFooter {
+  padding: 27px 22px;
+  display: flex;
+  flex-direction: column;
+}
+
+.communityBackground {
+  position: relative;
+  height: 105px;
+  width: 100%;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+}
+
+.communityParametres {
+  margin-bottom: 20px;
+}
+
+.communityParameter {
+  display: flex;
+  align-items: center;
+  padding-left: 7px;
+  color: #a3a3a3;
+  font-size: 13px;
+  margin: 5px 0;
+}
+
+.parameterText {
+  margin-left: 7px;
+}
+
+.avatar {
+  border: 4px #ffffff solid;
+  margin-top: -50px;
+}
+
+.threeDots {
+  position: absolute;
+  top: 0px;
+  right: 20px;
+  font-size: 25px;
+  color: #c7cce4;
+  cursor: pointer;
+}
+
+.communityName {
+  margin-top: 3px;
+  margin-bottom: 20px;
+}
+
+.name {
+  font-size: 16px;
+  color: #000;
+}
+
+.description {
+  font-size: 14px;
+  color: #a3a3a3;
+}
+
+.bagesHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 24px 26px 0 32px;
+  font-size: 13px;
+  color: #000;
+}
+
+.bagesLink {
+  cursor: pointer;
+  color: #a3a3a3;
+}
+
+.bagesContent {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 42px 36px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  color: #000;
+  font-weight: 500;
+  padding: 24px 26px 0 32px;
+}
+
+.categoriesHeader {
+  padding-bottom: 16px;
+}
+
+.descriptionHeader {
+  padding-bottom: 26px;
+}
+
+.categoriesContent {
+  display: flex;
+  padding: 0 30px 29px;
+  flex-wrap: wrap;
+}
+
+.categoriesContent div {
+  background-color: #fff;
+  border: 1px #e2e2e2 solid;
+}
+
+.descriptionContent {
+  height: 140px;
+  padding: 0 32px;
+  overflow: hidden;
+  font-size: 13px;
+  position: relative;
+}
+
+.descriptionContent::after {
+  content: ' ';
+  position: absolute;
+  height: 56px;
+  width: calc(100% - 60px);
+  bottom: 0;
+  background: linear-gradient(to top, white, rgba(255, 255, 255, 0));
+  /* background: linear-gradient(top, rgba(0, 255, 0, 0), lime); */
+  /* background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.001) 0%, #fff 5%, #fff 100%); */
+}
+
+.descriptionFooter {
+  padding: 11px 0 31px 0;
+  text-align: center;
+}
+
+/* reset button css */
+.descriptionButton,
+.offersButton {
+  border: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  overflow: visible;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  line-height: normal;
+  -webkit-font-smoothing: inherit;
+  -moz-osx-font-smoothing: inherit;
+  -webkit-appearance: none;
+}
+/* reset button css */
+
+.descriptionButton {
+  background-color: #e2e4ed;
+  padding: 10px 22px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.offersHeader {
+  width: 100%;
+  padding-left: 16px;
+}
+
+.offersHeaderOptions {
+  display: flex;
+  color: #a3a3a3;
+  font-size: 13px;
+  font-weight: 400;
+}
+.offersHeaderOption {
+  margin-left: 34px;
+  cursor: pointer;
+}
+
+.offersHeaderIcon {
+  margin-right: 10px;
+}
+
+.offersButton {
+  cursor: pointer;
+  color: #b8b8b8;
+  margin: 0 auto;
+}
+
+.offersButtonIcon {
+  margin-right: 10px;
+}
+
+.offerCard {
+  width: 347px;
+  max-width: 723px;
+  flex-grow: 1;
+}
+
+.offerGhost {
+  width: 377px;
+  max-width: 753px;
+  flex-grow: 1;
+}
+
+.offerCardHeader {
+  font-size: 14px;
+  color: #363636;
+}
+
+.offerCardContent {
+  padding: 0 30px;
+}
+
+.offerCardAction {
+  display: flex;
+  justify-content: space-between;
+  flex-grow: 1;
+  margin-top: 18px;
+  padding-bottom: 26px;
+}
+
+.offerCardPrice,
+.offerCardCurrency {
+  font-size: 18px;
+}
+
+.offerCardCurrency {
+  color: #9194a7;
+}
+
+.offerCardActionChild:nth-child(1) {
+  width: 50%;
+}
+.offerCardActionChild:nth-child(2) {
+  width: 40%;
+}
+
+.offerCards {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.offersCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

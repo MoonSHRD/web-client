@@ -9,7 +9,11 @@ const CommunityAction = ({ viewer, data, join, leave }) => {
   const joined = viewer.joinedCommunityIds.includes(data.id);
   const action = joined ? leave : join;
 
-  return <Button onClick={action}>{joined ? 'Присоединиться' : 'Покинуть'}</Button>;
+  return (
+    <Button type={joined ? 'primary' : 'default'} onClick={action}>
+      {joined ? 'Вступить в сообщество' : 'Покинуть'}
+    </Button>
+  );
 };
 
 CommunityAction.propTypes = {
