@@ -1,0 +1,20 @@
+.root {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  padding-left: 36px;
+  height: 92px;
+  color: #b7b7b7;
+  font-size: 14px;
+}
+
+.root a {
+  text-decoration: none;
+  color: #b7b7b7;
+}
+
+.divider {
+  cursor: default;
+  padding: 0 22px;
+  vertical-align: 0.5px;
+}
