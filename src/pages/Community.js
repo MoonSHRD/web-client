@@ -18,7 +18,7 @@ const Community = ({ community, viewer, update, relayEnvironment }) => {
     <Fragment>
       <h2>{community.name}</h2>
       <UploadFile onSuccess={update} relayEnvironment={relayEnvironment}>
-        <Avatar icon={community.avatarUrl} />
+        <Avatar size={64} src={community.avatarUrl} />
       </UploadFile>
       <CommunityAction viewer={viewer} data={community} />
     </Fragment>
@@ -48,6 +48,7 @@ const query = graphql`
     community(id: $id) {
       id
       name
+      avatarUrl
       shortDescription
       ...CommunityAction
     }
@@ -67,7 +68,7 @@ const enhance = compose(
   withMutation('update', (props, input = {}) => {
     const sharedUpdater = store => {
       const community = store.get(props.community.id);
-      community.setValue(input.avatarUrl, 'avatarUrl');
+      community.setValue(input.url, 'avatarUrl');
     };
 
     return {
@@ -75,7 +76,7 @@ const enhance = compose(
       variables: {
         input: {
           id: props.community.id,
-          avatarUrl: input.avatarUrl,
+          avatarUrl: input.url,
         },
       },
       optimisticUpdater: sharedUpdater,

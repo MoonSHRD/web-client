@@ -1,8 +1,10 @@
-import React, { useState, Fragment } from 'react';
+import React, { useState } from 'react';
 import { Button, Upload } from 'antd';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-relay';
 import commitMutation from 'relay-commit-mutation-promise';
+
+import './UploadFile.css';
 
 const mutation = graphql`
   mutation UploadFileMutation($input: UploadFileInput!) {
@@ -26,7 +28,7 @@ const UploadFile = ({ onSuccess, children, relayEnvironment }) => {
     const res = await commitMutation(relayEnvironment, {
       mutation,
       variables: {
-        input: { name: 'test' },
+        input: { name: file.name },
       },
     });
 
@@ -46,7 +48,8 @@ const UploadFile = ({ onSuccess, children, relayEnvironment }) => {
       body,
     });
 
-    onSuccess({ avatarUrl: url });
+    setFile(null);
+    onSuccess({ url: `${url}/${data.key}` });
   };
 
   const uploadProps = {
@@ -59,10 +62,14 @@ const UploadFile = ({ onSuccess, children, relayEnvironment }) => {
   };
 
   return (
-    <Fragment>
-      <Upload {...uploadProps}>{children}</Upload>
-      <Button onClick={upload}>Save</Button>
-    </Fragment>
+    <div styleName="uploadWrapper">
+      <Upload styleName="uploadComponent" {...uploadProps}>
+        {children}
+      </Upload>
+      <Button disabled={!file} styleName="uploadButton" onClick={upload}>
+        Upload
+      </Button>
+    </div>
   );
 };
 

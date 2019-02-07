@@ -48,7 +48,7 @@ const tree = (
                   </Chat>
                   <GroupSettings path="group/:id/settings" {...context} relayEnvironment={relayEnvironment} />
                   <CommunitiesList path="communities" {...context} relayEnvironment={relayEnvironment} />
-                  <Profile path="profile" {...context} />
+                  <Profile path="profile" {...context} relayEnvironment={relayEnvironment} />
                   <Payments path="payments" {...context} />
                   <Settings path="settings" {...context} />
                   <User path="user/:name" {...context} />
