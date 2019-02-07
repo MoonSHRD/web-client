@@ -186,6 +186,7 @@ type Mutation {
   leaveCommunity(input: LeaveCommunityInput!): LeaveCommunityPayload
   createRoom(input: CreateRoomInput!): CreateRoomPayload
   uploadFile(input: UploadFileInput!): UploadFilePayload
+  updateCommunity(input: UpdateCommunityInput!): UpdateCommunityPayload
 }
 
 input NewRoomMessageInput {
@@ -294,6 +295,25 @@ type RoomMessageEdge {
 
 type Subscription {
   newRoomMessage(input: NewRoomMessageInput!): NewRoomMessagePayload
+}
+
+type UpdateCommunity {
+  common: String
+  name: String
+}
+
+input UpdateCommunityInput {
+  id: ID!
+  name: String
+  tags: [ID!]
+  avatarUrl: String
+  clientMutationId: String
+}
+
+type UpdateCommunityPayload {
+  edge: MonsterCommunityEdge
+  errors: UpdateCommunity
+  clientMutationId: String
 }
 
 type UploadFile {
