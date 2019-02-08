@@ -261,24 +261,18 @@ const enhance = compose(
       id: props.id,
     }),
   }),
-  withMutation('update', (props, input = {}) => {
-    const sharedUpdater = store => {
-      const community = store.get(props.community.id);
-      community.setValue(input.url, 'avatarUrl');
-    };
-
-    return {
-      mutation: updateCommunityMutation,
-      variables: {
-        input: {
-          id: props.community.id,
-          avatarUrl: input.url,
-        },
+  withMutation('update', (props, input = {}) => ({
+    mutation: updateCommunityMutation,
+    variables: {
+      input: {
+        id: props.community.id,
+        avatarUrl: input.url,
       },
-      optimisticUpdater: sharedUpdater,
-      updater: sharedUpdater,
-    };
-  })
+    },
+    optimisticResponse: {
+      avatarUrl: input.url,
+    },
+  }))
 );
 
 Community.propTypes = {
