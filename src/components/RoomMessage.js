@@ -10,6 +10,7 @@ import './RoomMessage.css';
 const Message = ({ data, room }) => {
   const { event, status } = data;
   const cli = useContext(MatrixClientContext);
+  const user = cli.getUser(cli.getUserId());
 
   const handleMenuClick = e => {
     if (e.key === 'remove') {
@@ -31,7 +32,7 @@ const Message = ({ data, room }) => {
 
   return (
     <div styleName="root">
-      <div styleName="avatar" />
+      <img src={user.avatarUrl} styleName="avatar" alt={cli.getUserId()} />
       <div styleName="content">
         <div styleName="text">
           <Link to={`/user/${event.sender}`} styleName="sender">
