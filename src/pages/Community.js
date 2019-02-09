@@ -270,7 +270,10 @@ const enhance = compose(
       },
     },
     optimisticResponse: {
-      avatarUrl: input.url,
+      community: {
+        id: props.community.id,
+        avatarUrl: input.url,
+      },
     },
   }))
 );
