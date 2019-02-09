@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ModalLink from 'components/atoms/ModalLink';
+import ModalLink from 'components/ModalLink';
 import { Button } from 'antd';
 import { connect } from 'react-redux';
 import * as actions from '../store/actions';

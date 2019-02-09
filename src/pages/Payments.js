@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 
 import { getOr } from 'unchanged';
 
-import SendPayment from '../components/organisms/SendPayment';
-import PaymentsHistory from '../components/organisms/PaymentsHistory';
+import SendPayment from '../components/SendPayment';
+import PaymentsHistory from '../components/PaymentsHistory';
 
 import useAbortableFetch from '../components/hooks/useAbortableFetch';
 

@@ -4,9 +4,9 @@ import PropTypes from 'prop-types';
 
 import { Form, Input, Button } from 'antd';
 
-import { fetchData } from '../hooks/useAbortableFetch';
+import { fetchData } from 'components/hooks/useAbortableFetch';
 
-import { hasErrors, makeHandleSubmit } from '../../utils/form';
+import { hasErrors, makeHandleSubmit } from 'utils/form';
 
 import './SendPayment.css';
 

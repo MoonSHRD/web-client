@@ -1,6 +1,6 @@
 import React from 'react';
 // import PropTypes from 'prop-types';
-import Tab from 'components/atoms/Tab';
+import Tab from 'components/Tab';
 import './Tabs.css';
 
 const Tabs = () => (

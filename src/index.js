@@ -6,7 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from './components/App';
 import RelayEnvironmentContext from './components/RelayEnvironmentContext';
 import MatrixClientContext from './components/MatrixClientContext';
-import ModalRenderer from './components/templates/ModalRenderer';
+import ModalRenderer from './components/ModalRenderer';
 import createStore from './store/createStore';
 import createRelayEnvironment from './createRelayEnvironment';
 import modals from './modals';
@@ -25,7 +25,7 @@ import User from './pages/User';
 import Catalog from './pages/Catalog';
 import Signup from './pages/Signup';
 import GroupSettings from './pages/GroupSettings';
-import Chat from './components/templates/Chat';
+import Chat from './components/Chat';
 
 const { store, persistor } = createStore();
 const relayEnvironment = createRelayEnvironment(store);

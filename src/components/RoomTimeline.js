@@ -1,6 +1,6 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
-import RoomMessage from 'components/organisms/RoomMessage';
+import RoomMessage from 'components/RoomMessage';
 import './RoomTimeline.css';
 
 const RoomTimeline = ({ timeline, room }) => {

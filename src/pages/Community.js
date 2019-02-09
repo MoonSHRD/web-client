@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-relay';
 import { Avatar, Icon, Button } from 'antd';
-import CommunityAction from 'components/organisms/CommunityAction';
-import CommunityBreadcrumbs from 'components/atoms/CommunityBreadcrumbs';
-import Bage from 'components/atoms/Bage';
-import Tag from 'components/atoms/Tag';
+import CommunityAction from 'components/CommunityAction';
+import CommunityBreadcrumbs from 'components/CommunityBreadcrumbs';
+import Bage from 'components/Bage';
+import Tag from 'components/Tag';
 
 import withQueryRenderer from 'hocs/withQueryRenderer';
 

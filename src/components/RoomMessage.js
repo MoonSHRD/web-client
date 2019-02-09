@@ -4,7 +4,7 @@ import { Link } from '@reach/router';
 import { Menu, Dropdown } from 'antd';
 import { EventStatus } from 'matrix-js-sdk';
 import MatrixClientContext from 'components/MatrixClientContext';
-import UnknownMessageBody from 'components/molecules/UnknownMessageBody';
+import UnknownMessageBody from 'components/UnknownMessageBody';
 import './RoomMessage.css';
 
 const Message = ({ data, room }) => {

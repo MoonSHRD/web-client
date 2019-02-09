@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import { Location, navigate } from '@reach/router';
 import { graphql } from 'react-relay';
 import withQueryRenderer from 'hocs/withQueryRenderer';
-import Search from 'components/molecules/Search';
-import Tabs from 'components/molecules/Tabs';
-import GroupCollapse from 'components/molecules/GroupCollapse';
-import ModalLink from 'components/atoms/ModalLink';
+import Search from 'components/Search';
+import Tabs from 'components/Tabs';
+import GroupCollapse from 'components/GroupCollapse';
+import ModalLink from 'components/ModalLink';
 import qs from 'query-string';
 import './ChatSidebar.css';
 
