@@ -1,0 +1,14 @@
+.uploadWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 90px;
+  align-items: center;
+}
+
+.uploadComponent {
+  cursor: pointer;
+}
+
+.uploadButton {
+  margin: 5px;
+}

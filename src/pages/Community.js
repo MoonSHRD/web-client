@@ -2,26 +2,35 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-relay';
 import { Avatar, Icon, Button } from 'antd';
-import CommunityAction from 'components/CommunityAction';
-import CommunityBreadcrumbs from 'components/CommunityBreadcrumbs';
-import Bage from 'components/Bage';
-import Tag from 'components/Tag';
+import { compose } from 'redux';
+import CommunityAction from 'components/organisms/CommunityAction';
+import UploadFile from 'components/organisms/UploadFile';
+import CommunityBreadcrumbs from 'components/atoms/CommunityBreadcrumbs';
+import Bage from 'components/atoms/Bage';
+import Tag from 'components/atoms/Tag';
 
 import withQueryRenderer from 'hocs/withQueryRenderer';
+import withMutation from 'hocs/withMutation';
 
 import './Community.module.css';
 
-const Community = ({ community, viewer }) => {
+const Community = ({ community, viewer, update, relayEnvironment }) => {
   if (!community || !viewer) {
     return <div>Not found</div>;
   }
+
+  const communityProps = {
+    data: community,
+    update,
+    relayEnvironment,
+  };
 
   return (
     <div>
       <CommunityBreadcrumbs items={[{ href: '/catalog', label: 'Сообщества' }]} title={community.name} />
       <div styleName="root">
         <div styleName="cardsLine">
-          <CommunityCard data={community} button={<CommunityAction viewer={viewer} data={community} />} />
+          <CommunityCard {...communityProps} button={<CommunityAction viewer={viewer} data={community} />} />
           <Bages />
           <Categories />
         </div>
@@ -34,13 +43,15 @@ const Community = ({ community, viewer }) => {
   );
 };
 
-const CommunityCard = ({ data, button }) => (
+const CommunityCard = ({ data, button, update, relayEnvironment }) => (
   <div styleName="card infoCard">
     <div styleName="communityHeader">
       <div styleName="communityBackground" style={{ backgroundColor: '#005a9b' }}>
         <span styleName="threeDots">...</span>
       </div>
-      <Avatar styleName="avatar" size={100} icon="user" src={data.avatarUrl} />
+      <UploadFile onSuccess={update} relayEnvironment={relayEnvironment}>
+        <Avatar styleName="avatar" size={100} icon="user" src={data.avatarUrl} />
+      </UploadFile>
       <div styleName="communityName">
         <span styleName="name">{data.name}</span>
         {data.shortDescription && <span styleName="description">{data.shortDescription}</span>}
@@ -208,11 +219,30 @@ const Offers = () => (
   </div>
 );
 
+const updateCommunityMutation = graphql`
+  mutation CommunityMutation($input: UpdateCommunityInput!) {
+    updateCommunity(input: $input) {
+      edge {
+        node {
+          id
+          name
+          avatarUrl
+        }
+      }
+      errors {
+        common
+        name
+      }
+    }
+  }
+`;
+
 const query = graphql`
   query CommunityQuery($id: ID!) {
     community(id: $id) {
       id
       name
+      avatarUrl
       shortDescription
       avatarUrl
       userCount
@@ -225,25 +255,51 @@ const query = graphql`
   }
 `;
 
-const enhance = withQueryRenderer(query, {
-  getVariables: props => ({
-    id: props.id,
+const enhance = compose(
+  withQueryRenderer(query, {
+    getVariables: props => ({
+      id: props.id,
+    }),
   }),
-});
+  withMutation('update', (props, input = {}) => ({
+    mutation: updateCommunityMutation,
+    variables: {
+      input: {
+        id: props.community.id,
+        avatarUrl: input.url,
+      },
+    },
+    optimisticResponse: {
+      community: {
+        id: props.community.id,
+        avatarUrl: input.url,
+      },
+    },
+  }))
+);
 
 Community.propTypes = {
+  relayEnvironment: PropTypes.object.isRequired,
+  update: PropTypes.func,
   community: PropTypes.object,
   viewer: PropTypes.object,
 };
 
 CommunityCard.propTypes = {
+  relayEnvironment: PropTypes.object.isRequired,
   data: PropTypes.object.isRequired,
   button: PropTypes.node.isRequired,
+  update: PropTypes.func,
 };
 
 Community.defaultProps = {
   community: null,
   viewer: null,
+  update: () => {},
+};
+
+CommunityCard.defaultProps = {
+  update: () => {},
 };
 
 export default enhance(Community);
