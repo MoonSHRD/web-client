@@ -236,7 +236,7 @@ type Query {
   room(id: ID!): Room
   group(id: ID!): Group
   groups: [Group!]!
-  community(id: ID, rowId: Int): Community
+  community(id: ID, rowId: Int, roomId: String): Community
   communities(after: String, first: Int, search: String): CommunityConnection
   allCommunityTags: [String!]!
 }
