@@ -32,7 +32,11 @@ const Message = ({ data, room }) => {
 
   return (
     <div styleName="root">
-      <img src={user.avatarUrl} styleName="avatar" alt={cli.getUserId()} />
+      {user.avatarUrl ? (
+        <img src={user.avatarUrl} styleName="avatar" alt={cli.getUserId()} />
+      ) : (
+        <div styleName="avatar" />
+      )}
       <div styleName="content">
         <div styleName="text">
           <Link to={`/user/${event.sender}`} styleName="sender">

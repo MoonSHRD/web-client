@@ -4,14 +4,14 @@ import RoomMessage from 'components/RoomMessage';
 import RoomEvent from 'components/RoomEvent';
 import './RoomTimeline.css';
 
-const RoomTimeline = ({ timeline, room }) => {
+const RoomTimeline = ({ room }) => {
   const rootEl = useRef(null);
 
   useLayoutEffect(
     () => {
       rootEl.current.scrollTo(0, rootEl.current.scrollHeight);
     },
-    [rootEl, timeline]
+    [rootEl, room.timeline]
   );
 
   return (
@@ -28,8 +28,7 @@ const RoomTimeline = ({ timeline, room }) => {
 };
 
 RoomTimeline.propTypes = {
-  timeline: PropTypes.array.isRequired,
-  room: PropTypes.array.isRequired,
+  room: PropTypes.object.isRequired,
 };
 
 export default RoomTimeline;
