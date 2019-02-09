@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import ModalLink from 'components/atoms/ModalLink';
+import ModalLink from 'components/ModalLink';
 import { Button, Avatar } from 'antd';
 import { connect } from 'react-redux';
-import UploadFile from 'components/organisms/UploadFile';
+import UploadFile from 'components/UploadFile';
 import * as actions from '../store/actions';
 
 const Profile = props => {
