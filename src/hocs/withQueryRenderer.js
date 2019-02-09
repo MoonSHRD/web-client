@@ -2,8 +2,8 @@ import React, { useContext } from 'react';
 import QueryLookupRenderer from 'relay-query-lookup-renderer';
 
 import RelayEnvironmentContext from 'components/RelayEnvironmentContext';
-import QueryRendererError from 'components/molecules/QueryRendererError';
-import Loading from 'components/molecules/Loading';
+import QueryRendererError from 'components/QueryRendererError';
+import Loading from 'components/Loading';
 
 export default (query, config = {}) => Component => wrapperProps => {
   const environment = useContext(RelayEnvironmentContext);

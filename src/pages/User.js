@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-relay';
 import withQueryRenderer from 'hocs/withQueryRenderer';
-import CommunityAction from 'components/organisms/CommunityAction';
+import CommunityAction from 'components/CommunityAction';
 
 const User = ({ user, viewer }) => (
   <div>

@@ -3,8 +3,8 @@ import { graphql, createFragmentContainer } from 'react-relay';
 import PropTypes from 'prop-types';
 import { Avatar, Icon } from 'antd';
 import { Link } from '@reach/router';
-import ModalLink from 'components/atoms/ModalLink';
-import IconItem from 'components/atoms/IconItem';
+import ModalLink from 'components/ModalLink';
+import IconItem from 'components/IconItem';
 import qs from 'query-string';
 import './GroupCollapse.css';
 

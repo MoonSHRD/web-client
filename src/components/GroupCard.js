@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { createFragmentContainer, graphql } from 'react-relay';
 import { Avatar, Icon, Button } from 'antd';
-import Tag from 'components/atoms/Tag';
+import Tag from 'components/Tag';
 import './GroupCard.css';
 
 const GroupCard = ({ data }) => (
