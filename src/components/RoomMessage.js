@@ -7,6 +7,16 @@ import MatrixClientContext from 'components/MatrixClientContext';
 import UnknownMessageBody from 'components/UnknownMessageBody';
 import './RoomMessage.css';
 
+const getBody = data => {
+  const { event } = data;
+
+  if (event.content.msgtype === 'image') {
+    return <img src={event.content.url} alt={event.content.body} />;
+  }
+
+  return event.content.body || <UnknownMessageBody event={data} />;
+};
+
 const Message = ({ data, room }) => {
   const { event, status } = data;
   const cli = useContext(MatrixClientContext);
@@ -42,7 +52,7 @@ const Message = ({ data, room }) => {
           <Link to={`/user/${event.sender}`} styleName="sender">
             {event.sender}
           </Link>
-          {event.content.body || <UnknownMessageBody event={data} />}
+          {getBody(data)}
           {menu && (
             <Dropdown overlay={menu}>
               <div>...</div>

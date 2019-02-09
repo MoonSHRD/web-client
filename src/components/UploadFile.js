@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
-import { Button, Upload } from 'antd';
+/* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */
+
+import React, { useRef, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { graphql } from 'react-relay';
+import RelayEnvironmentContext from 'components/RelayEnvironmentContext';
 import commitMutation from 'relay-commit-mutation-promise';
 
 import './UploadFile.css';
@@ -21,10 +23,14 @@ const mutation = graphql`
   }
 `;
 
-const UploadFile = ({ onSuccess, children, relayEnvironment }) => {
-  const [file, setFile] = useState();
+const UploadFile = ({ onSuccess, children, accept, className, ...props }) => {
+  const relayEnvironment = useContext(RelayEnvironmentContext);
+  const uploadEl = useRef(null);
 
-  const upload = async () => {
+  const openDialog = () => uploadEl.current.click();
+  const handleChange = async () => {
+    const file = uploadEl.current.files[0];
+
     const res = await commitMutation(relayEnvironment, {
       mutation,
       variables: {
@@ -48,39 +54,28 @@ const UploadFile = ({ onSuccess, children, relayEnvironment }) => {
       body,
     });
 
-    setFile(null);
     onSuccess({ url: `${url}/${data.key}` });
   };
 
-  const uploadProps = {
-    accept: '.png,.jpg,.jpeg',
-    showUploadList: false,
-    beforeUpload: f => {
-      setFile(f);
-      return false;
-    },
-  };
-
   return (
-    <div styleName="uploadWrapper">
-      <Upload styleName="uploadComponent" {...uploadProps}>
-        {children}
-      </Upload>
-      <Button disabled={!file} styleName="uploadButton" onClick={upload}>
-        Upload
-      </Button>
-    </div>
+    <span styleName="uploadWrapper" className={className} onClick={openDialog} {...props}>
+      <input type="file" hidden ref={uploadEl} onChange={handleChange} accept={accept} />
+      {children}
+    </span>
   );
 };
 
 UploadFile.propTypes = {
   onSuccess: PropTypes.func.isRequired,
-  relayEnvironment: PropTypes.object.isRequired,
+  accept: PropTypes.string,
+  className: PropTypes.string,
   children: PropTypes.any,
 };
 
 UploadFile.defaultProps = {
+  accept: 'image/*',
   children: undefined,
+  className: undefined,
 };
 
 export default UploadFile;

@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Icon } from 'antd';
-import { makeHandleSubmit } from '../utils/form';
+import { makeHandleSubmit } from 'utils/form';
+import UploadFile from 'components/UploadFile';
 import './SendMessage.css';
 
 const SendMessage = ({ className, matrixClient, form, roomId }) => {
@@ -19,12 +20,26 @@ const SendMessage = ({ className, matrixClient, form, roomId }) => {
     });
   });
 
+  const sendFile = ({ url }) => {
+    matrixClient.sendMessage(roomId, {
+      msgtype: 'image',
+      url,
+      body: 'filename.png',
+      info: {
+        mimetype: 'image/png',
+        size: 1000,
+      },
+    });
+  };
+
   return (
     <form onSubmit={handleSubmit} className={className}>
       {/* eslint-disable-next-line jsx-a11y/label-has-for */}
       <label htmlFor="chat-input">
         <div styleName="wrapper">
-          <Icon type="paper-clip" styleName="paperClip" />
+          <UploadFile onSuccess={sendFile} styleName="paperClip">
+            <Icon type="paper-clip" />
+          </UploadFile>
           {/* eslint-disable jsx-a11y/no-autofocus */}
           {form.getFieldDecorator('message', { rules: [{ required: true, message: 'Please input your message!' }] })(
             <input
