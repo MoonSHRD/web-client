@@ -19,6 +19,7 @@
   padding: 7px 15px;
   position: relative;
   margin-right: 45px;
+  max-width: 500px;
 }
 
 .text::after {

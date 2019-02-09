@@ -1,6 +1,7 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import PropTypes from 'prop-types';
 import RoomMessage from 'components/RoomMessage';
+import RoomEvent from 'components/RoomEvent';
 import './RoomTimeline.css';
 
 const RoomTimeline = ({ timeline, room }) => {
@@ -20,7 +21,7 @@ const RoomTimeline = ({ timeline, room }) => {
           return <RoomMessage key={e.event.event_id} data={e} room={room} />;
         }
 
-        return <div key={e.event.event_id}>{e.event.type}</div>;
+        return <RoomEvent key={e.event.event_id} data={e} />;
       })}
     </div>
   );
